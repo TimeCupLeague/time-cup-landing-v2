@@ -1,0 +1,53 @@
+<section id="gallery" class="dark-1">
+  <div class="features">
+            <div class="features-row">
+                <h2>ASÍ FUE EL PRIMER WOD PRESENCIAL ‘26</h2>
+                <a href="https://www.flickr.com/gp/204393378@N04/66P9XmC702" class="btn-outline" target="_blank">Ver todas las fotos →</a>
+            </div>
+        </div>
+            
+        <div class="glider-contain">
+        <div class="glider">
+            <div><img src="img/DSC4371.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC4195.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC4383.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC4126.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC3896.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC4171.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC4012.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC4316.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC4078.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC3819.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC3939.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC4371.jpg" alt="Season 1"></div>
+            <div><img src="img/DSC4126.jpg" alt="Season 1"></div>
+
+
+            
+        </div>
+
+        <button class="glider-prev"><img src="img/chevron-left.svg" alt="anterior"></button>
+        <button class="glider-next"><img src="img/chevron-right.svg" alt="siguiente"></button>
+
+        <div role="tablist" class="dots"></div>
+        </div>  
+</section>
+
+<script is:inline>
+    function initGlider() {
+        if (typeof Glider === 'undefined') return;
+        new Glider(document.querySelector('.glider'), {
+            slidesToShow: 3,
+            dots: '.dots',
+            arrows: {
+                prev: '.glider-prev',
+                next: '.glider-next'
+            }
+        });
+    }
+
+    var gliderScript = document.createElement('script');
+    gliderScript.src = '/glider.min.js';
+    gliderScript.onload = initGlider;
+    document.head.appendChild(gliderScript);
+</script>

@@ -1,0 +1,46 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  url?: string;
+}
+
+const {
+  title = 'TimeCup League',
+  description = 'La primera liga online y presencial de Cross Training en formato competitivo. Temporadas de 3 meses, categorías por nivel y equipos de 3 personas.',
+  image = '/og-image.jpg',
+  url = 'https://timecupleague.com',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || url);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" type="text/css" href="/src/components/carousel/glider.css">
+
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Additional Meta Tags -->
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="TimeCup League" />
+    <meta name="theme-color" content="#4714DB" />
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html>
