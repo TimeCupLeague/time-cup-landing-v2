@@ -1,0 +1,12 @@
+name: 📄 Generic issue
+description: Abre un issue genérico
+title: '[ISSUE] '
+labels: [question]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Detalles
+      description: Explica lo que necesitas
+    validations:
+      required: true

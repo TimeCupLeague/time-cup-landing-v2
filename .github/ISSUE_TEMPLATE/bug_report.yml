@@ -1,0 +1,57 @@
+name: 🐞 Bug report
+description: Reporta un problema en el proyecto
+title: '[BUG] '
+labels: [bug]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Gracias por tomarte el tiempo de reportar un bug 🙌
+
+  - type: input
+    id: summary
+    attributes:
+      label: Descripción breve
+      description: Explica en una frase el bug
+      placeholder: 'Ejemplo: El botón de login no responde'
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Pasos para reproducir
+      description: Explica cómo replicar el problema
+      placeholder: |
+        1. Ir a "..."
+        2. Click en "..."
+        3. Ver error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamiento esperado
+      description: ¿Qué debería ocurrir?
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Capturas de pantalla
+      description: Si aplica, añade imágenes o vídeos
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severidad
+      options:
+        - Baja
+        - Media
+        - Alta
+    validations:
+      required: true

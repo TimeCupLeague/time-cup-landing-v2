@@ -1,0 +1,30 @@
+name: 🛠️ Improvement
+description: Sugerir mejoras a funcionalidades existentes
+title: '[IMPROVEMENT] '
+labels: [improvement]
+body:
+  - type: input
+    id: component
+    attributes:
+      label: Componente/área afectada
+      placeholder: 'Ejemplo: UI del dashboard'
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Comportamiento actual
+      description: ¿Qué hay ahora mismo que debería mejorar?
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Propuesta de mejora
+      description: ¿Qué propones cambiar o mejorar?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Prioridad
+      options: [Baja, Media, Alta]
