@@ -1,0 +1,96 @@
+name: Release Minor Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: 'Version type'
+        required: true
+        default: 'minor'
+        type: choice
+        options:
+          - minor
+          - patch
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run CI checks
+        run: |
+          npm run lint
+          npm run format:check
+          npm run type-check
+          npm run build
+
+      - name: Get current version
+        id: current_version
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Bump version
+        id: bump_version
+        run: |
+          npm version ${{ github.event.inputs.version_type }} --no-git-tag-version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "Bumped version from ${{ steps.current_version.outputs.version }} to $NEW_VERSION"
+
+      - name: Commit version bump
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add package.json package-lock.json
+          git commit -m "chore: bump version to ${{ steps.bump_version.outputs.new_version }}"
+
+      - name: Create release branch
+        run: |
+          # Delete remote branch if it exists
+          git push origin --delete release/v${{ steps.bump_version.outputs.new_version }} 2>/dev/null || true
+          git checkout -b release/v${{ steps.bump_version.outputs.new_version }}
+          git push origin release/v${{ steps.bump_version.outputs.new_version }}
+
+      - name: Create PR to main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base 'main' \
+            --head 'release/v${{ steps.bump_version.outputs.new_version }}' \
+            --title 'Release v${{ steps.bump_version.outputs.new_version }}' \
+            --body '## Release v${{ steps.bump_version.outputs.new_version }}
+
+          This PR merges the latest changes from `develop` to `main` for release.
+
+          ### Changes
+          - Version bumped from ${{ steps.current_version.outputs.version }} to ${{ steps.bump_version.outputs.new_version }}
+          - All changes from `develop` branch
+
+          ### Checklist
+          - [x] CI checks passed
+          - [x] Version bumped
+          - [ ] Ready for production deployment
+
+          **Note**: After merging this PR, a sync PR will be automatically created to merge `main` back to `develop`.' \
+            --label automated --label release --label ${{ github.event.inputs.version_type }}

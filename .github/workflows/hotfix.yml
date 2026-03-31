@@ -1,0 +1,96 @@
+name: Hotfix Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      hotfix_version:
+        description: 'Hotfix version (e.g., 1.0.1)'
+        required: true
+        type: string
+      hotfix_description:
+        description: 'Description of the hotfix'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  hotfix:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run CI checks
+        run: |
+          npm run lint
+          npm run format:check
+          npm run type-check
+          npm run build
+
+      - name: Get current version
+        id: current_version
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Set hotfix version
+        id: set_version
+        run: |
+          npm version ${{ github.event.inputs.hotfix_version }} --no-git-tag-version
+          echo "hotfix_version=${{ github.event.inputs.hotfix_version }}" >> $GITHUB_OUTPUT
+          echo "Set hotfix version from ${{ steps.current_version.outputs.version }} to ${{ github.event.inputs.hotfix_version }}"
+
+      - name: Commit hotfix version
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add package.json package-lock.json
+          git commit -m "hotfix: bump version to ${{ github.event.inputs.hotfix_version }}"
+
+      - name: Create hotfix branch
+        run: |
+          # Delete remote branch if it exists
+          git push origin --delete hotfix/v${{ github.event.inputs.hotfix_version }} 2>/dev/null || true
+          git checkout -b hotfix/v${{ github.event.inputs.hotfix_version }}
+          git push origin hotfix/v${{ github.event.inputs.hotfix_version }}
+
+      - name: Create PR to main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base 'main' \
+            --head 'hotfix/v${{ github.event.inputs.hotfix_version }}' \
+            --title '🔥 Hotfix v${{ github.event.inputs.hotfix_version }}' \
+            --body '## 🔥 Hotfix v${{ github.event.inputs.hotfix_version }}
+
+          **Description**: ${{ github.event.inputs.hotfix_description }}
+
+          ### Changes
+          - Hotfix version bumped from ${{ steps.current_version.outputs.version }} to ${{ github.event.inputs.hotfix_version }}
+          - Critical bug fix for production
+
+          ### Checklist
+          - [x] CI checks passed
+          - [x] Hotfix version set
+          - [ ] Hotfix tested in staging
+          - [ ] Ready for immediate production deployment
+
+          **Note**: After merging this PR, a sync PR will be automatically created to merge `main` back to `develop`.' \
+            --label automated --label release --label hotfix

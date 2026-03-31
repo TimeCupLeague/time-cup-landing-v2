@@ -1,0 +1,96 @@
+name: Release Major Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_major:
+        description: 'Are you sure you want to release a MAJOR version? This will break backward compatibility.'
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' && github.event.inputs.confirm_major == 'true'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run CI checks
+        run: |
+          npm run lint
+          npm run format:check
+          npm run type-check
+          npm run build
+
+      - name: Get current version
+        id: current_version
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Bump major version
+        id: bump_version
+        run: |
+          npm version major --no-git-tag-version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "Bumped MAJOR version from ${{ steps.current_version.outputs.version }} to $NEW_VERSION"
+
+      - name: Commit version bump
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add package.json package-lock.json
+          git commit -m "chore: bump MAJOR version to ${{ steps.bump_version.outputs.new_version }}"
+
+      - name: Create release branch
+        run: |
+          # Delete remote branch if it exists
+          git push origin --delete release/v${{ steps.bump_version.outputs.new_version }} 2>/dev/null || true
+          git checkout -b release/v${{ steps.bump_version.outputs.new_version }}
+          git push origin release/v${{ steps.bump_version.outputs.new_version }}
+
+      - name: Create PR to main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base 'main' \
+            --head 'release/v${{ steps.bump_version.outputs.new_version }}' \
+            --title '🚀 MAJOR Release v${{ steps.bump_version.outputs.new_version }}' \
+            --body '## 🚀 MAJOR Release v${{ steps.bump_version.outputs.new_version }}
+
+          ⚠️ **BREAKING CHANGES** - This is a major version release that includes breaking changes.
+
+          ### Changes
+          - **MAJOR** version bumped from ${{ steps.current_version.outputs.version }} to ${{ steps.bump_version.outputs.new_version }}
+          - All changes from `develop` branch
+          - **Backward compatibility may be broken**
+
+          ### Checklist
+          - [x] CI checks passed
+          - [x] MAJOR version bumped
+          - [ ] Breaking changes documented
+          - [ ] Migration guide updated (if needed)
+          - [ ] Ready for production deployment
+
+          **Note**: After merging this PR, a sync PR will be automatically created to merge `main` back to `develop`.' \
+            --label automated --label release --label major
