@@ -1,5 +1,7 @@
 ---
-import 'glider-js/glider.min.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 ---
 
 <section id="gallery" class="gallery-section">
@@ -13,30 +15,32 @@ import 'glider-js/glider.min.css';
     </div>
   </div>
 
-  <div class="glider-outer-container">
-    <div class="glider-contain">
-      <div class="glider">
-        <div class="glider-slide"><img src="img/DSC4371.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
-        <div class="glider-slide"><img src="img/DSC4195.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
-        <div class="glider-slide"><img src="img/DSC4383.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
-        <div class="glider-slide"><img src="img/DSC4126.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
-        <div class="glider-slide"><img src="img/DSC3896.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
-        <div class="glider-slide"><img src="img/DSC4171.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
-        <div class="glider-slide"><img src="img/DSC4012.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
-        <div class="glider-slide"><img src="img/DSC4316.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
-        <div class="glider-slide"><img src="img/DSC4078.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
-        <div class="glider-slide"><img src="img/DSC3819.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
-        <div class="glider-slide"><img src="img/DSC3939.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+  <div class="gallery-outer-container">
+    <div class="swiper-container">
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="img/DSC4371.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4195.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4383.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4126.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC3896.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4171.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4012.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4316.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4078.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC3819.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC3939.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+        </div>
       </div>
 
-      <button class="glider-nav-btn glider-prev" aria-label="Anterior">
+      <button class="swiper-nav-btn swiper-prev" aria-label="Anterior">
         <img src="img/chevron-left.svg" alt="" width="24" height="24">
       </button>
-      <button class="glider-nav-btn glider-next" aria-label="Siguiente">
+      <button class="swiper-nav-btn swiper-next" aria-label="Siguiente">
         <img src="img/chevron-right.svg" alt="" width="24" height="24">
       </button>
 
-      <div role="tablist" class="dots"></div>
+      <div class="swiper-pagination"></div>
     </div>
   </div>
 </section>
@@ -105,26 +109,25 @@ import 'glider-js/glider.min.css';
     transform: translateX(4px);
   }
 
-  .glider-outer-container {
+  .gallery-outer-container {
     padding: 0 1rem;
   }
 
-  .glider-contain {
+  .swiper-container {
     max-width: 1500px; /* Slightly wider than content for bleed effect */
     margin: 0 auto;
     position: relative;
   }
 
-  .glider-slide {
-    padding: 0 0.75rem;
+  .swiper-slide {
     cursor: grab;
   }
 
-  .glider-slide:active {
+  .swiper-slide:active {
     cursor: grabbing;
   }
 
-  .glider-slide img {
+  .swiper-slide img {
     width: 100%;
     aspect-ratio: 16/10;
     object-fit: cover;
@@ -134,14 +137,14 @@ import 'glider-js/glider.min.css';
     filter: brightness(0.85) saturate(0.9);
   }
 
-  .glider-slide:hover img {
+  .swiper-slide:hover img {
     filter: brightness(1) saturate(1.1);
     transform: scale(1.02);
     box-shadow: 0 20px 40px -10px rgba(145, 114, 233, 0.3);
   }
 
   /* Navigation Buttons - Glassmorphism */
-  .glider-nav-btn {
+  .swiper-nav-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -162,58 +165,61 @@ import 'glider-js/glider.min.css';
     visibility: hidden;
   }
 
-  .glider-contain:hover .glider-nav-btn {
+  .swiper-container:hover .swiper-nav-btn {
     opacity: 1;
     visibility: visible;
   }
 
-  .glider-prev {
+  .swiper-prev {
     left: 2rem;
   }
 
-  .glider-next {
+  .swiper-next {
     right: 2rem;
   }
 
-  .glider-nav-btn:hover {
+  .swiper-nav-btn:hover {
     background: #4714db;
     border-color: #4714db;
     transform: translateY(-50%) scale(1.1);
     box-shadow: 0 10px 30px rgba(71, 20, 219, 0.4);
   }
 
-  .glider-nav-btn img {
+  .swiper-nav-btn img {
     width: 24px;
     height: 24px;
     filter: invert(1);
   }
 
   /* Dots Styling */
-  .dots {
-    margin-top: 3rem;
+  .swiper-pagination {
+    margin-top: 3rem !important;
+    position: relative !important;
+    bottom: 0 !important;
     display: flex;
     justify-content: center;
     gap: 0.75rem;
   }
 
-  .glider-dot {
+  :global(.swiper-dot) {
     width: 8px;
     height: 8px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.2) !important;
     border-radius: 99px;
     border: none;
     padding: 0;
     cursor: pointer;
     transition: all 0.3s ease;
+    opacity: 1 !important;
   }
 
-  .glider-dot:hover {
-    background: rgba(255, 255, 255, 0.4);
+  :global(.swiper-dot:hover) {
+    background: rgba(255, 255, 255, 0.4) !important;
   }
 
-  .glider-dot.active {
+  :global(.swiper-dot.active) {
     width: 32px;
-    background: #4714db;
+    background: #4714db !important;
     box-shadow: 0 0 15px rgba(71, 20, 219, 0.5);
   }
 
@@ -226,71 +232,75 @@ import 'glider-js/glider.min.css';
       margin-bottom: 2rem;
     }
 
-    .glider-nav-btn {
+    .swiper-nav-btn {
       width: 44px;
       height: 44px;
       opacity: 1;
       visibility: visible;
     }
 
-    .glider-prev { left: 1rem; }
-    .glider-next { right: 1rem; }
+    .swiper-prev { left: 1rem; }
+    .swiper-next { right: 1rem; }
 
-    .glider-slide img {
+    .swiper-slide img {
       border-radius: 12px;
     }
     
-    .dots {
-      margin-top: 2rem;
+    .swiper-pagination {
+      margin-top: 2rem !important;
     }
   }
 </style>
 
 <script>
-  import Glider from 'glider-js';
+  import Swiper from 'swiper';
+  import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
-  function initGlider() {
-    const gliderEl = document.querySelector('.glider');
-    if (!gliderEl) return;
+  function initSwiper() {
+    const swiperEl = document.querySelector('.swiper');
+    if (!swiperEl) return;
 
-    new Glider(gliderEl as HTMLElement, {
-      slidesToShow: 1.2,
-      slidesToScroll: 1,
-      draggable: true,
-      dots: '.dots',
-      arrows: {
-        prev: '.glider-prev',
-        next: '.glider-next'
+    new Swiper(swiperEl as HTMLElement, {
+      modules: [Navigation, Pagination, Autoplay],
+      slidesPerView: 1.2,
+      spaceBetween: 24,
+      loop: true,
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
       },
-      responsive: [
-        {
-          breakpoint: 640,
-          settings: {
-            slidesToShow: 2.2,
-            slidesToScroll: 1,
-          }
+      grabCursor: true,
+      centeredSlides: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+        bulletClass: 'swiper-dot',
+        bulletActiveClass: 'active',
+      },
+      navigation: {
+        nextEl: '.swiper-next',
+        prevEl: '.swiper-prev',
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 2.2,
+          centeredSlides: false,
         },
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3.2,
-            slidesToScroll: 1,
-          }
+        1024: {
+          slidesPerView: 3.2,
+          centeredSlides: false,
         },
-        {
-          breakpoint: 1400,
-          settings: {
-            slidesToShow: 4.2,
-            slidesToScroll: 1,
-          }
+        1400: {
+          slidesPerView: 4.2,
+          centeredSlides: false,
         }
-      ]
+      }
     });
   }
 
   // Initialize on page load
-  initGlider();
+  initSwiper();
 
   // Re-initialize on View Transitions (if used)
-  document.addEventListener('astro:page-load', initGlider);
+  document.addEventListener('astro:page-load', initSwiper);
 </script>
