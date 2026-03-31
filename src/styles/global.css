@@ -611,7 +611,7 @@ h2 {
 
 .cross {
     color: #fff !important; 
-    opacity: 0.3;
+    opacity: 0.6;
     font-size: .9rem;
 }
 
@@ -1071,18 +1071,7 @@ footer  a:hover{
   .gallery-outer-container {
     margin-bottom:3rem;
   }
-  /* Iconos de Check y Cross */
-  .check {
-      color: #9172E9 !important; 
-      font-family: 'Poppins' !important;
-      font-size: .9rem;
-  }
 
-  .cross {
-      color: #fff !important; 
-      opacity: 0.3;
-      font-size: .9rem;
-  }
 
 }
 
