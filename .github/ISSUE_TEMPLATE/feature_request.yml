@@ -1,0 +1,27 @@
+name: ✨ Feature request
+description: Sugiere una nueva funcionalidad
+title: '[FEATURE] '
+labels: [enhancement]
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Problema a resolver
+      description: ¿Qué problema soluciona esta nueva funcionalidad?
+      placeholder: Sería genial si la app pudiera...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Propuesta de solución
+      description: Describe cómo debería funcionar
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternativas consideradas
+      description: ¿Qué otras soluciones has valorado?

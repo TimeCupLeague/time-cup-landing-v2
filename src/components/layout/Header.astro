@@ -1,0 +1,118 @@
+---
+---
+
+<header class="glass">
+  <div class="container header-wrapper">
+    <a href="/" class="logo">
+      <span class="gradient-text">TimeCup</span> League
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#hero">Inicio</a></li>
+        <li><a href="#features">Ventajas</a></li>
+        <li><a href="#how">Cómo funciona</a></li>
+        <li><a href="#categories">Categorías</a></li>
+        <li><a href="#chronogram">Calendario</a></li>
+        <li><a href="#inscriptions" class="btn-primary">Inscribirse</a></li>
+      </ul>
+    </nav>
+    <button class="mobile-toggle" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  header {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 1200px;
+    height: 72px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    border-radius: 16px;
+  }
+
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+  }
+
+  .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -1px;
+    color: white;
+  }
+
+  nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  nav a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--foreground);
+    opacity: 0.8;
+    transition: var(--transition);
+  }
+
+  nav a:hover {
+    opacity: 1;
+    color: var(--accent);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    color: #000 !important;
+    font-weight: 700;
+    opacity: 1 !important;
+    box-shadow: 0 4px 15px rgba(255, 174, 0, 0.2);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 174, 0, 0.4);
+  }
+
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .mobile-toggle span {
+    width: 24px;
+    height: 2px;
+    background: white;
+    transition: var(--transition);
+  }
+
+  @media (max-width: 992px) {
+    nav {
+      display: none;
+    }
+    .mobile-toggle {
+      display: flex;
+    }
+  }
+</style>

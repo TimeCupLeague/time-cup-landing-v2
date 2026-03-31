@@ -1,0 +1,101 @@
+---
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+---
+
+<section id="gallery" class="dark-1">
+  <div class="features">
+    <div class="features-row">
+      <h2>ASÍ FUE EL PRIMER WOD PRESENCIAL ‘26</h2>
+      <a href="https://www.flickr.com/gp/204393378@N04/66P9XmC702" class="btn-outline" target="_blank">
+        Ver todas las fotos →
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="gallery-outer-container">
+    <div class="swiper-container">
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="img/DSC4371.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4195.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4383.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4126.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC3896.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4171.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4012.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4316.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC4078.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC3819.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+          <div class="swiper-slide"><img src="img/DSC3939.jpg" alt="Momentos TimeCup Season 1" loading="lazy"></div>
+        </div>
+      </div>
+
+      <button class="swiper-nav-btn swiper-prev" aria-label="Anterior">
+        <img src="img/chevron-left.svg" alt="" width="24" height="24">
+      </button>
+      <button class="swiper-nav-btn swiper-next" aria-label="Siguiente">
+        <img src="img/chevron-right.svg" alt="" width="24" height="24">
+      </button>
+
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+  import Swiper from 'swiper';
+  import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
+  function initSwiper() {
+    const swiperEl = document.querySelector('.swiper');
+    if (!swiperEl) return;
+
+    new Swiper(swiperEl as HTMLElement, {
+      modules: [Navigation, Pagination, Autoplay],
+      slidesPerView: 1.2,
+      spaceBetween: 16,
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      grabCursor: true,
+      centeredSlides: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+        bulletClass: 'swiper-dot',
+        bulletActiveClass: 'active',
+      },
+      navigation: {
+        nextEl: '.swiper-next',
+        prevEl: '.swiper-prev',
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 2.2,
+          centeredSlides: false,
+        },
+        1024: {
+          slidesPerView: 3.2,
+          centeredSlides: false,
+        },
+        1400: {
+          slidesPerView: 4.2,
+          centeredSlides: false,
+        }
+      }
+    });
+  }
+
+  // Initialize on page load
+  initSwiper();
+
+  // Re-initialize on View Transitions (if used)
+  document.addEventListener('astro:page-load', initSwiper);
+</script>
