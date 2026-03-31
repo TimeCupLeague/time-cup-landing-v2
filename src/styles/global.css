@@ -968,35 +968,6 @@ footer  a:hover{
   box-shadow: 0 0 15px rgba(71, 20, 219, 0.5);
 }
 
-@media (max-width: 768px) {
-  .gallery-section {
-    padding: 4rem 0;
-  }
-  
-  .gallery-header {
-    margin-bottom: 2rem;
-  }
-
-  .swiper-nav-btn {
-    width: 44px;
-    height: 44px;
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .swiper-prev { left: 1rem; }
-  .swiper-next { right: 1rem; }
-
-  .swiper-slide img {
-    border-radius: 12px;
-  }
-  
-  .swiper-pagination {
-    margin-top: 2rem !important;
-  }
-}
-
-
 
 
 /* Responsive para tablets y móviles */
@@ -1066,7 +1037,38 @@ footer  a:hover{
      flex-direction:column;
         display:flex;
   }
+  .navbar .logo {
+    margin-right:0px;
+  }
+    .navbar .logo img {
+    max-width:150px;
+  }
+  body {
+    overflow-x: hidden;
+  }
+  .swiper-pagination {
+    display:none;
+  }
 
+    .gallery-section {
+    padding: 4rem 0;
+  }
+  
+  .gallery-header {
+    margin-bottom: 2rem;
+  }
+
+  .swiper-nav-btn {
+    display:none;
+  }
+
+  .swiper-prev { left: 1rem; }
+  .swiper-next { right: 1rem; }
+
+
+  .gallery-outer-container {
+    margin-bottom:3rem;
+  }
 }
 
 
