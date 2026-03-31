@@ -371,7 +371,7 @@ h2 {
     width: 4px;
     background-image: linear-gradient(to right, #9172E9 50%, rgba(255, 255, 255, 0) 0%);
     background-position: top;
-    background-size: 10px 88%;
+    background-size: 10px 80%;
     background-repeat: repeat-x;
 }
 
@@ -606,11 +606,13 @@ h2 {
 .check {
     color: #9172E9 !important; 
     font-family: 'Poppins' !important;
+    font-size: .9rem;
 }
 
 .cross {
     color: #fff !important; 
     opacity: 0.3;
+    font-size: .9rem;
 }
 
 
@@ -1050,7 +1052,7 @@ footer  a:hover{
     display:none;
   }
 
-    .gallery-section {
+  .gallery-section {
     padding: 4rem 0;
   }
   
@@ -1069,6 +1071,19 @@ footer  a:hover{
   .gallery-outer-container {
     margin-bottom:3rem;
   }
+  /* Iconos de Check y Cross */
+  .check {
+      color: #9172E9 !important; 
+      font-family: 'Poppins' !important;
+      font-size: .9rem;
+  }
+
+  .cross {
+      color: #fff !important; 
+      opacity: 0.3;
+      font-size: .9rem;
+  }
+
 }
 
 
