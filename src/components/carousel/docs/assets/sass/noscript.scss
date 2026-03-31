@@ -13,16 +13,16 @@
 
 /* Header */
 
-	#header {
-		body.is-preload & {
-			&.alt {
-				> * {
-					opacity: 1;
-				}
+#header {
+  body.is-preload & {
+    &.alt {
+      > * {
+        opacity: 1;
+      }
 
-				.logo {
-					@include vendor('transform', 'none');
-				}
-			}
-		}
-	}
+      .logo {
+        @include vendor('transform', 'none');
+      }
+    }
+  }
+}

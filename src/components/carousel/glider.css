@@ -31,9 +31,7 @@
   max-width: 100%;
   width: 100%;
   object-fit: cover;
-
 }
-
 
 .glider.drag {
   cursor: -webkit-grabbing;
@@ -53,7 +51,7 @@
   height: 0;
 }
 .glider-prev {
-  left:2rem;
+  left: 2rem;
 }
 .glider-prev,
 .glider-next {
@@ -71,8 +69,9 @@
   color: #666;
   opacity: 1;
   line-height: 1;
-  transition: opacity 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67),
-  color 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+  transition:
+    opacity 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67),
+    color 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
   width: 56px;
   height: 56px;
   display: flex;
@@ -85,8 +84,7 @@
 .glider-prev:focus,
 .glider-next:focus {
   background-color: rgba(255, 255, 255, 0.25);
-  transition: all .3s ease-out;
-
+  transition: all 0.3s ease-out;
 }
 .glider-prev.disabled:hover,
 .glider-next.disabled:hover,
@@ -95,9 +93,9 @@
   background-color: transparent;
 }
 
-.glider-slide.left-1, 
+.glider-slide.left-1,
 .glider-slide.right-1 {
-    opacity: 0.3;
+  opacity: 0.3;
 }
 .glider-prev img,
 .glider-next img {
@@ -135,9 +133,9 @@
   outline: none;
   display: block;
   cursor: pointer;
-  color: #2E353D;
+  color: #2e353d;
   border-radius: 999px;
-  background: #2E353D;
+  background: #2e353d;
   width: 12px;
   height: 12px;
   margin: 7px;
@@ -145,7 +143,7 @@
 .glider-dot:hover,
 .glider-dot:focus,
 .glider-dot.active {
-  background: #9172E9;
+  background: #9172e9;
 }
 @media (max-width: 36em) {
   .glider::-webkit-scrollbar {
