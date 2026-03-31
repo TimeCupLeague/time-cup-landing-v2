@@ -4,12 +4,12 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 ---
 
-<section id="gallery" class="gallery-section">
-  <div class="gallery-header">
-    <div class="header-content">
+<section id="gallery" class="dark-1">
+  <div class="features">
+    <div class="features-row">
       <h2>ASÍ FUE EL PRIMER WOD PRESENCIAL ‘26</h2>
-      <a href="https://www.flickr.com/gp/204393378@N04/66P9XmC702" class="btn-outline-premium" target="_blank">
-        Ver todas las fotos 
+      <a href="https://www.flickr.com/gp/204393378@N04/66P9XmC702" class="btn-outline" target="_blank">
+        Ver todas las fotos →
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
       </a>
     </div>
@@ -45,212 +45,7 @@ import 'swiper/css/pagination';
   </div>
 </section>
 
-<style>
-  .gallery-section {
-    background-color: #111517;
-    padding: 6rem 0;
-    overflow: hidden;
-  }
 
-  .gallery-header {
-    max-width: 1400px;
-    margin: 0 auto 3rem;
-    padding: 0 2rem;
-  }
-
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-  }
-
-  .gallery-header h2 {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 700;
-    line-height: 1.1;
-    text-transform: uppercase;
-    margin: 0;
-    color: #fff;
-    letter-spacing: -0.02em;
-  }
-
-  .btn-outline-premium {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.8rem 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 99px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(8px);
-  }
-
-  .btn-outline-premium:hover {
-    background: #fff;
-    color: #111517;
-    border-color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px -10px rgba(255, 255, 255, 0.3);
-  }
-
-  .btn-outline-premium svg {
-    transition: transform 0.3s ease;
-  }
-
-  .btn-outline-premium:hover svg {
-    transform: translateX(4px);
-  }
-
-  .gallery-outer-container {
-    padding: 0 1rem;
-  }
-
-  .swiper-container {
-    max-width: 1500px; /* Slightly wider than content for bleed effect */
-    margin: 0 auto;
-    position: relative;
-  }
-
-  .swiper-slide {
-    cursor: grab;
-  }
-
-  .swiper-slide:active {
-    cursor: grabbing;
-  }
-
-  .swiper-slide img {
-    width: 100%;
-    aspect-ratio: 16/10;
-    object-fit: cover;
-    border-radius: 20px;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-    filter: brightness(0.85) saturate(0.9);
-  }
-
-  .swiper-slide:hover img {
-    filter: brightness(1) saturate(1.1);
-    transform: scale(1.02);
-    box-shadow: 0 20px 40px -10px rgba(145, 114, 233, 0.3);
-  }
-
-  /* Navigation Buttons - Glassmorphism */
-  .swiper-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: rgba(26, 31, 35, 0.7);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  .swiper-container:hover .swiper-nav-btn {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .swiper-prev {
-    left: 2rem;
-  }
-
-  .swiper-next {
-    right: 2rem;
-  }
-
-  .swiper-nav-btn:hover {
-    background: #4714db;
-    border-color: #4714db;
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 10px 30px rgba(71, 20, 219, 0.4);
-  }
-
-  .swiper-nav-btn img {
-    width: 24px;
-    height: 24px;
-    filter: invert(1);
-  }
-
-  /* Dots Styling */
-  .swiper-pagination {
-    margin-top: 3rem !important;
-    position: relative !important;
-    bottom: 0 !important;
-    display: flex;
-    justify-content: center;
-    gap: 0.75rem;
-  }
-
-  :global(.swiper-dot) {
-    width: 8px;
-    height: 8px;
-    background: rgba(255, 255, 255, 0.2) !important;
-    border-radius: 99px;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 1 !important;
-  }
-
-  :global(.swiper-dot:hover) {
-    background: rgba(255, 255, 255, 0.4) !important;
-  }
-
-  :global(.swiper-dot.active) {
-    width: 32px;
-    background: #4714db !important;
-    box-shadow: 0 0 15px rgba(71, 20, 219, 0.5);
-  }
-
-  @media (max-width: 768px) {
-    .gallery-section {
-      padding: 4rem 0;
-    }
-    
-    .gallery-header {
-      margin-bottom: 2rem;
-    }
-
-    .swiper-nav-btn {
-      width: 44px;
-      height: 44px;
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .swiper-prev { left: 1rem; }
-    .swiper-next { right: 1rem; }
-
-    .swiper-slide img {
-      border-radius: 12px;
-    }
-    
-    .swiper-pagination {
-      margin-top: 2rem !important;
-    }
-  }
-</style>
 
 <script>
   import Swiper from 'swiper';
@@ -263,10 +58,10 @@ import 'swiper/css/pagination';
     new Swiper(swiperEl as HTMLElement, {
       modules: [Navigation, Pagination, Autoplay],
       slidesPerView: 1.2,
-      spaceBetween: 24,
+      spaceBetween: 16,
       loop: true,
       autoplay: {
-        delay: 4000,
+        delay: 5000,
         disableOnInteraction: false,
       },
       grabCursor: true,
