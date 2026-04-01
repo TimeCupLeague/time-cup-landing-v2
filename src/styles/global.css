@@ -189,31 +189,31 @@ body {
   gap: 8px;
 }
 .hero .season-tag {
-    display: flex;
-    padding: 8px 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    background-color: #d353ba;
-    color: #111517;
-    font-size: 1.2rem;
-    font-style: normal;
-    font-weight: 600;
-    text-transform: uppercase;
+  display: flex;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background-color: #d353ba;
+  color: #111517;
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .hero h1 {
-    color: #fff;
-    font-family: Outfit, sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 114%;
-    text-transform: uppercase;
-    text-align: left;
-    margin: 1rem 0rem;
+  color: #fff;
+  font-family: Outfit, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 114%;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 1rem 0rem;
 }
 .hero-btns {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 /* Ajuste para móviles */
