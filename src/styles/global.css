@@ -20,6 +20,7 @@ body {
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
   font-weight: 100;
+  overflow-x: hidden;
 }
 
 /* Navegación */
@@ -305,11 +306,6 @@ body {
   align-items: center;
 }
 
-body {
-  margin: 0;
-  color: #fff;
-}
-
 .how-it-works {
   padding: 80px 20px;
 }
@@ -396,13 +392,6 @@ h2 {
   color: #fff;
   line-height: 1.5;
   font-size: 1rem;
-}
-
-body {
-  margin: 0;
-  font-family: Inter, sans-serif;
-  background: #0f1720;
-  color: #fff;
 }
 
 .timeline {
@@ -1014,9 +1003,6 @@ footer a:hover {
   }
   .navbar .logo img {
     max-width: 150px;
-  }
-  body {
-    overflow-x: hidden;
   }
   .swiper-pagination {
     display: none;
