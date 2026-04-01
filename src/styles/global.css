@@ -1011,6 +1011,12 @@ footer a:hover {
     flex-direction: column;
     display: flex;
   }
+  footer .btn-secondary {
+    padding: 16px 12px;
+  }
+  footer .btn-secondary img {
+    width: 16px;
+  }
   .navbar .logo {
     margin-right: 0px;
   }
