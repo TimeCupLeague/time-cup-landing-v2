@@ -1011,10 +1011,10 @@ footer a:hover {
     flex-direction: column;
     display: flex;
   }
-  footer .btn-secondary {
+  .qr-item .btn-secondary {
     padding: 16px 12px;
   }
-  footer .btn-secondary img {
+  .qr-item .btn-secondary img {
     width: 16px;
   }
   .navbar .logo {
