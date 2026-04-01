@@ -20,6 +20,7 @@ body {
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
   font-weight: 100;
+  overflow-x: hidden;
 }
 
 /* Navegación */
@@ -305,11 +306,6 @@ body {
   align-items: center;
 }
 
-body {
-  margin: 0;
-  color: #fff;
-}
-
 .how-it-works {
   padding: 80px 20px;
 }
@@ -398,13 +394,6 @@ h2 {
   font-size: 1rem;
 }
 
-body {
-  margin: 0;
-  font-family: Inter, sans-serif;
-  background: #0f1720;
-  color: #fff;
-}
-
 .timeline {
   padding: 80px 20px;
 }
@@ -448,10 +437,10 @@ h2 {
 
 /* Rows */
 .week-row {
-  display: grid;
-  grid-template-columns: 160px 1fr;
+  display: flex;
   gap: 16px;
   margin-bottom: 12px;
+  align-items: stretch;
 }
 
 /* Day */
@@ -464,6 +453,7 @@ h2 {
   justify-content: center;
   text-align: center;
   font-size: 14px;
+  flex: 0 0 180px;
 }
 
 /* Cards */
@@ -471,6 +461,7 @@ h2 {
   border-radius: 8px;
   padding: 16px 24px;
   font-size: 14px;
+  flex: 1;
 }
 
 /* Variants */
@@ -771,6 +762,17 @@ footer a:hover {
   margin-bottom: 1rem;
 }
 
+.card-col {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.card-col .card-item {
+  width: 100%;
+}
+
 .number-container {
   display: flex;
   width: 40px;
@@ -992,7 +994,7 @@ footer a:hover {
 }
 
 @media (max-width: 768px) {
-  .qr-item img {
+  .qr-item .qr {
     display: none !important;
   }
   .hero-season h2 {
@@ -1009,14 +1011,17 @@ footer a:hover {
     flex-direction: column;
     display: flex;
   }
+  .qr-item .btn-secondary {
+    padding: 16px 12px;
+  }
+  .qr-item .btn-secondary img {
+    width: 16px;
+  }
   .navbar .logo {
     margin-right: 0px;
   }
   .navbar .logo img {
     max-width: 150px;
-  }
-  body {
-    overflow-x: hidden;
   }
   .swiper-pagination {
     display: none;
@@ -1047,6 +1052,32 @@ footer a:hover {
   .box-afiliados img {
     max-width: 100px;
     max-height: 100px;
+  }
+  .day {
+    flex: 0 0 120px;
+  }
+  #como-funciona .features,
+  #cronograma .features {
+    padding-bottom: 0px;
+  }
+  #como-funciona .right img {
+    height: 400px;
+  }
+  .features h2 {
+    text-align: center;
+  }
+  .features-row {
+    align-items: center;
+  }
+  .app-container p {
+    text-align: center;
+  }
+  .hero-content {
+    align-items: center;
+  }
+  .hero h1 {
+    text-align: center;
+    font-size: 2.5rem;
   }
 }
 
