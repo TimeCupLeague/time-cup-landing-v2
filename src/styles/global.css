@@ -1056,7 +1056,8 @@ footer a:hover {
   .day {
   flex: 0 0 120px;
 }
- #como-funciona .features {
+ #como-funciona .features,
+ #cronograma .features{
   padding-bottom:0px;
  }
   #como-funciona .right img {
