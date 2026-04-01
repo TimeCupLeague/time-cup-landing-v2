@@ -461,7 +461,7 @@ h2 {
   border-radius: 8px;
   padding: 16px 24px;
   font-size: 14px;
-  flex:1;
+  flex: 1;
 }
 
 /* Variants */
@@ -766,11 +766,11 @@ footer a:hover {
   display: flex;
   align-items: start;
   flex-direction: column;
-  gap:12px;
-  flex:1;
+  gap: 12px;
+  flex: 1;
 }
 .card-col .card-item {
-  width:100%;
+  width: 100%;
 }
 
 .number-container {
@@ -1054,12 +1054,12 @@ footer a:hover {
     max-height: 100px;
   }
   .day {
-  flex: 0 0 120px;
-}
- #como-funciona .features,
- #cronograma .features{
-  padding-bottom:0px;
- }
+    flex: 0 0 120px;
+  }
+  #como-funciona .features,
+  #cronograma .features {
+    padding-bottom: 0px;
+  }
   #como-funciona .right img {
     height: 400px;
   }
@@ -1076,7 +1076,7 @@ footer a:hover {
     align-items: center;
   }
   .hero h1 {
-    text-align: center;        
+    text-align: center;
     font-size: 2.5rem;
   }
 }
