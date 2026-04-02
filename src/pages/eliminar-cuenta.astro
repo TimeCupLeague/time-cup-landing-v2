@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Header from '../components/sections/Header.astro'
+import Footer from '../components/sections/Footer.astro'
+---
+
+<Layout>
+  <Header />
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-small img-privacidad">
+      <div class="hero-content">
+        <h1>Eliminar cuenta</h1>
+      </div>
+    </section>
+
+    <!-- Instructions Section -->
+    <section class="container-medium" style="display: flex; justify-content: center;">
+      <div class="card" style="background: #21262c; padding: 2.5rem; border-radius: 8px; width: 100%;">
+        <h2
+          style="font-size: 1.5rem; margin-bottom: 1.5rem; text-transform: none; color: #fff; font-family: 'Poppins', sans-serif;">
+          Instrucciones para eliminar tu cuenta
+        </h2>
+        <p style="color: #fff; font-size: 1rem; line-height: 1.6;">
+          Si deseas eliminar tu cuenta de TimeCup League, puedes hacerlo enviando una solicitud por correo
+          electrónico o desde la app.
+          <br /><br />
+          Para proceder con la eliminación de tu cuenta, por favor envía un correo electrónico a:
+          <br /><br />
+          <a href="mailto:timecupleague@gmail.com" style="color: #9172e9; text-decoration: underline;"
+            >timecupleague@gmail.com</a
+          >
+          <br /><br />
+          En tu solicitud, por favor incluye:
+          <br />- Tu dirección de correo electrónico asociada a la cuenta
+          <br />- Una breve indicación de que deseas eliminar tu cuenta
+          <br /><br />
+          Una vez recibida tu solicitud, procederemos a eliminar tu cuenta y todos los datos asociados a la misma,
+          de acuerdo con nuestra Política de Privacidad y la normativa aplicable.
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
