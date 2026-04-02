@@ -17,9 +17,25 @@ export function ChangePasswordForm({ supabaseUrl, supabaseAnonKey }: ChangePassw
   // Verificar que las credenciales de Supabase estén configuradas
   if (!supabaseUrl || !supabaseAnonKey) {
     return (
-      <div className="card" style={{ background: '#21262c', padding: '2.5rem', borderRadius: '8px', border: '1px solid rgba(255, 77, 79, 0.2)' }}>
+      <div
+        className="card"
+        style={{
+          background: '#21262c',
+          padding: '2.5rem',
+          borderRadius: '8px',
+          border: '1px solid rgba(255, 77, 79, 0.2)',
+        }}>
         <div style={{ textAlign: 'center' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.5rem', textTransform: 'none' }}>Error de Configuración</h2>
+          <h2
+            style={{
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+              color: '#fff',
+              marginBottom: '0.5rem',
+              textTransform: 'none',
+            }}>
+            Error de Configuración
+          </h2>
           <p style={{ color: '#ff7875' }}>
             Las credenciales de Supabase no están configuradas. Por favor, contacta al administrador.
           </p>
@@ -152,7 +168,14 @@ export function ChangePasswordForm({ supabaseUrl, supabaseAnonKey }: ChangePassw
 
   if (success) {
     return (
-      <div className="card" style={{ background: '#21262c', padding: '2.5rem', borderRadius: '8px', border: '1px solid rgba(74, 222, 128, 0.2)' }}>
+      <div
+        className="card"
+        style={{
+          background: '#21262c',
+          padding: '2.5rem',
+          borderRadius: '8px',
+          border: '1px solid rgba(74, 222, 128, 0.2)',
+        }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ marginBottom: '1rem' }}>
             <svg
@@ -168,14 +191,20 @@ export function ChangePasswordForm({ supabaseUrl, supabaseAnonKey }: ChangePassw
               />
             </svg>
           </div>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.5rem', textTransform: 'none' }}>¡Contraseña cambiada!</h2>
+          <h2
+            style={{
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+              color: '#fff',
+              marginBottom: '0.5rem',
+              textTransform: 'none',
+            }}>
+            ¡Contraseña cambiada!
+          </h2>
           <p style={{ color: '#ccc', marginBottom: '1.5rem' }}>
             Tu contraseña ha sido actualizada correctamente. Ya puedes iniciar sesión con tu nueva contraseña.
           </p>
-          <a
-            href="/"
-            className="btn-primary"
-            style={{ display: 'inline-block' }}>
+          <a href="/" className="btn-primary" style={{ display: 'inline-block' }}>
             Volver al inicio
           </a>
         </div>
@@ -185,17 +214,42 @@ export function ChangePasswordForm({ supabaseUrl, supabaseAnonKey }: ChangePassw
 
   return (
     <div className="card" style={{ background: '#21262c', padding: '2.5rem', borderRadius: '8px' }}>
-      <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff', marginBottom: '1.5rem', textAlign: 'center', textTransform: 'none' }}>Cambiar Contraseña</h2>
+      <h2
+        style={{
+          fontSize: '1.5rem',
+          fontWeight: 'bold',
+          color: '#fff',
+          marginBottom: '1.5rem',
+          textAlign: 'center',
+          textTransform: 'none',
+        }}>
+        Cambiar Contraseña
+      </h2>
 
       {error && (
-        <div style={{ marginBottom: '1.5rem', padding: '1rem', background: 'rgba(255, 77, 79, 0.2)', border: '1px solid rgba(255, 77, 79, 0.5)', borderRadius: '8px' }}>
+        <div
+          style={{
+            marginBottom: '1.5rem',
+            padding: '1rem',
+            background: 'rgba(255, 77, 79, 0.2)',
+            border: '1px solid rgba(255, 77, 79, 0.5)',
+            borderRadius: '8px',
+          }}>
           <p style={{ color: '#ff7875', fontSize: '0.875rem', margin: 0 }}>{error}</p>
         </div>
       )}
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         <div>
-          <label htmlFor="password" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#ccc', marginBottom: '0.5rem' }}>
+          <label
+            htmlFor="password"
+            style={{
+              display: 'block',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              color: '#ccc',
+              marginBottom: '0.5rem',
+            }}>
             Nueva Contraseña
           </label>
           <input
@@ -203,7 +257,15 @@ export function ChangePasswordForm({ supabaseUrl, supabaseAnonKey }: ChangePassw
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
-            style={{ width: '100%', padding: '0.75rem 1rem', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '8px', color: '#fff', outline: 'none' }}
+            style={{
+              width: '100%',
+              padding: '0.75rem 1rem',
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              borderRadius: '8px',
+              color: '#fff',
+              outline: 'none',
+            }}
             placeholder="Mínimo 6 caracteres"
             required
             disabled={loading || isValidToken === false}
@@ -211,7 +273,15 @@ export function ChangePasswordForm({ supabaseUrl, supabaseAnonKey }: ChangePassw
         </div>
 
         <div>
-          <label htmlFor="confirmPassword" style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#ccc', marginBottom: '0.5rem' }}>
+          <label
+            htmlFor="confirmPassword"
+            style={{
+              display: 'block',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              color: '#ccc',
+              marginBottom: '0.5rem',
+            }}>
             Confirmar Contraseña
           </label>
           <input
@@ -219,7 +289,15 @@ export function ChangePasswordForm({ supabaseUrl, supabaseAnonKey }: ChangePassw
             type="password"
             value={confirmPassword}
             onChange={e => setConfirmPassword(e.target.value)}
-            style={{ width: '100%', padding: '0.75rem 1rem', background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)', borderRadius: '8px', color: '#fff', outline: 'none' }}
+            style={{
+              width: '100%',
+              padding: '0.75rem 1rem',
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              borderRadius: '8px',
+              color: '#fff',
+              outline: 'none',
+            }}
             placeholder="Repite la contraseña"
             required
             disabled={loading || isValidToken === false}
@@ -230,7 +308,12 @@ export function ChangePasswordForm({ supabaseUrl, supabaseAnonKey }: ChangePassw
           type="submit"
           disabled={loading || isValidToken === false}
           className="btn-primary"
-          style={{ width: '100%', marginTop: '0.5rem', opacity: (loading || isValidToken === false) ? 0.5 : 1, cursor: (loading || isValidToken === false) ? 'not-allowed' : 'pointer' }}>
+          style={{
+            width: '100%',
+            marginTop: '0.5rem',
+            opacity: loading || isValidToken === false ? 0.5 : 1,
+            cursor: loading || isValidToken === false ? 'not-allowed' : 'pointer',
+          }}>
           {loading ? 'Cambiando contraseña...' : 'Cambiar Contraseña'}
         </button>
       </form>
