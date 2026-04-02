@@ -64,7 +64,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: url('../../public/img/hero-season.jpg');
+  background: url('/img/hero-season.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -122,15 +122,15 @@ body {
 }
 
 .hero-small.img-bases {
-  background: url('../../public/img/bases.jpg');
+  background: url('/img/bases.jpg');
   background-position: center;
 }
 .hero-small.img-privacidad {
-  background: url('../../public/img/privacidad.jpg');
+  background: url('/img/privacidad.jpg');
   background-position: center;
 }
 .hero-small.img-condiciones {
-  background: url('../../public/img/condiciones.jpg');
+  background: url('/img/condiciones.jpg');
 }
 
 .hero-small .hero-content {
