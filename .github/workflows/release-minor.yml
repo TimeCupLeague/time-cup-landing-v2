@@ -59,8 +59,8 @@ jobs:
 
       - name: Commit version bump
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "timecup-bot@timecupleague.com"
+          git config --local user.name "TimeCup Bot"
           git add package.json package-lock.json
           git commit -m "chore: bump version to ${{ steps.bump_version.outputs.new_version }}"
 

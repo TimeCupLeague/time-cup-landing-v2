@@ -58,8 +58,8 @@ jobs:
 
       - name: Commit hotfix version
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "timecup-bot@timecupleague.com"
+          git config --local user.name "TimeCup Bot"
           git add package.json package-lock.json
           git commit -m "hotfix: bump version to ${{ github.event.inputs.hotfix_version }}"
 
