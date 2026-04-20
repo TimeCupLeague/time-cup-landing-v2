@@ -4,32 +4,125 @@ import Header from '../components/sections/Header.astro'
 import Footer from '../components/sections/Footer.astro'
 ---
 
-<Layout title="Email Confirmado - TimeCup League">
+<Layout title="Confirmación de email - TimeCup League">
   <Header />
   <main>
     <section class="hero-small" style="height: 100vh;">
       <div class="hero-content" style="flex-direction: column; text-align: center;">
-        <div style="margin-bottom: 2rem;">
-          <svg style="width: 64px; height: 64px; margin: 0 auto; color: #4ade80;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        <div id="email-callback-icon-success" style="margin-bottom: 2rem;">
+          <svg
+            style="width: 64px; height: 64px; margin: 0 auto; color: #4ade80;"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <div id="email-callback-icon-error" style="margin-bottom: 2rem; display: none;">
+          <svg
+            style="width: 64px; height: 64px; margin: 0 auto; color: #f87171;"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            ></path>
           </svg>
         </div>
 
-        <h1 style="text-transform: none; font-size: 3rem;">Email Confirmado</h1>
+        <h1 id="email-callback-title" style="text-transform: none; font-size: 3rem;">Email confirmado</h1>
 
-        <p style="font-size: 1.25rem; color: #ccc; margin-bottom: 1.5rem;">
+        <p id="email-callback-lead" style="font-size: 1.25rem; color: #ccc; margin-bottom: 1.5rem;">
           Tu dirección de correo electrónico ha sido confirmada correctamente.
         </p>
 
-        <p style="font-size: 1rem; color: #aaa; margin-bottom: 2rem;">
+        <p id="email-callback-hint" style="font-size: 1rem; color: #aaa; margin-bottom: 2rem;">
           Ya puedes acceder a todas las funcionalidades de TimeCup League desde la app.
         </p>
 
-        <a href="/" class="btn-primary" style="display: inline-block;">
-          Volver al inicio
-        </a>
+        <a href="/" class="btn-primary" style="display: inline-block;">Volver al inicio</a>
       </div>
     </section>
   </main>
   <Footer />
 </Layout>
+
+<script is:inline>
+  ;(function () {
+    const titleEl = document.getElementById('email-callback-title')
+    const leadEl = document.getElementById('email-callback-lead')
+    const hintEl = document.getElementById('email-callback-hint')
+    const iconOk = document.getElementById('email-callback-icon-success')
+    const iconErr = document.getElementById('email-callback-icon-error')
+    if (!titleEl || !leadEl || !hintEl || !iconOk || !iconErr) return
+
+    const hash = window.location.hash && window.location.hash.length > 1 ? window.location.hash.slice(1) : ''
+    const search =
+      window.location.search && window.location.search.length > 1 ? window.location.search.slice(1) : ''
+    const params = new URLSearchParams(hash || search)
+
+    const err = params.get('error')
+    const errCode = params.get('error_code')
+    let errDesc = params.get('error_description')
+    if (errDesc) {
+      try {
+        errDesc = decodeURIComponent(errDesc.replace(/\+/g, ' '))
+      } catch {
+        errDesc = errDesc.replace(/\+/g, ' ')
+      }
+    }
+
+    const isError = Boolean(err || errCode)
+
+    function messageForCode(code) {
+      switch (code) {
+        case 'otp_expired':
+          return 'El enlace de confirmación ha caducado o ya no es válido. Solicita un correo nuevo desde la app.'
+        case 'flow_state_not_found':
+        case 'flow_state_expired':
+          return 'La sesión de confirmación no es válida o ha expirado. Vuelve a abrir el enlace desde un correo reciente o pide uno nuevo en la app.'
+        case 'access_denied':
+          return 'No se pudo completar la confirmación. Vuelve a intentarlo desde el correo o contacta con soporte si el problema continúa.'
+        case 'signup_disabled':
+          return 'En este momento no se permiten nuevos registros. Prueba más tarde o contacta con la liga.'
+        case 'over_email_send_rate_limit':
+          return 'Se han enviado demasiados correos. Espera unos minutos y vuelve a solicitar el enlace desde la app.'
+        default:
+          return null
+      }
+    }
+
+    if (isError) {
+      const custom = errCode && messageForCode(errCode)
+      const lead =
+        custom ||
+        (errDesc && errDesc.trim()) ||
+        'No se pudo confirmar el email. Vuelve a abrir el enlace del correo o solicita uno nuevo en la app.'
+      titleEl.textContent = 'No se pudo confirmar el email'
+      leadEl.textContent = lead
+      hintEl.textContent =
+        'Si el enlace es antiguo, pide de nuevo el correo de confirmación. Si el problema continúa, escríbenos a timecupleague@gmail.com.'
+      document.title = 'Error al confirmar el email - TimeCup League'
+      const meta = document.querySelector('meta[name="title"]')
+      if (meta) meta.setAttribute('content', document.title)
+      iconOk.style.display = 'none'
+      iconErr.style.display = 'block'
+      return
+    }
+
+    if (params.get('access_token') || params.get('type')) {
+      document.title = 'Email confirmado - TimeCup League'
+      const m = document.querySelector('meta[name="title"]')
+      if (m) m.setAttribute('content', document.title)
+    }
+  })()
+</script>
