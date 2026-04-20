@@ -2,34 +2,58 @@
 import Layout from '../layouts/Layout.astro'
 import Header from '../components/sections/Header.astro'
 import Footer from '../components/sections/Footer.astro'
+import emailConfirmCallbackUrl from '../scripts/email-confirm-callback.js?url'
 ---
 
-<Layout title="Email Confirmado - TimeCup League">
+<Layout title="Confirmación de email - TimeCup League">
   <Header />
   <main>
     <section class="hero-small" style="height: 100vh;">
       <div class="hero-content" style="flex-direction: column; text-align: center;">
-        <div style="margin-bottom: 2rem;">
-          <svg style="width: 64px; height: 64px; margin: 0 auto; color: #4ade80;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        <div id="email-callback-icon-success" style="margin-bottom: 2rem;">
+          <svg
+            style="width: 64px; height: 64px; margin: 0 auto; color: #4ade80;"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <div id="email-callback-icon-error" style="margin-bottom: 2rem; display: none;">
+          <svg
+            style="width: 64px; height: 64px; margin: 0 auto; color: #f87171;"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+            ></path>
           </svg>
         </div>
 
-        <h1 style="text-transform: none; font-size: 3rem;">Email Confirmado</h1>
+        <h1 id="email-callback-title" style="text-transform: none; font-size: 3rem;">Email confirmado</h1>
 
-        <p style="font-size: 1.25rem; color: #ccc; margin-bottom: 1.5rem;">
+        <p id="email-callback-lead" style="font-size: 1.25rem; color: #ccc; margin-bottom: 1.5rem;">
           Tu dirección de correo electrónico ha sido confirmada correctamente.
         </p>
 
-        <p style="font-size: 1rem; color: #aaa; margin-bottom: 2rem;">
+        <p id="email-callback-hint" style="font-size: 1rem; color: #aaa; margin-bottom: 2rem;">
           Ya puedes acceder a todas las funcionalidades de TimeCup League desde la app.
         </p>
 
-        <a href="/" class="btn-primary" style="display: inline-block;">
-          Volver al inicio
-        </a>
+        <a href="/" class="btn-primary" style="display: inline-block;">Volver al inicio</a>
       </div>
     </section>
   </main>
   <Footer />
+  <script src={emailConfirmCallbackUrl} defer></script>
 </Layout>
