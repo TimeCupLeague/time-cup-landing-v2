@@ -1,6 +1,35 @@
 ---
 import SurveyQuestion from './SurveyQuestion.astro';
 
+interface Option {
+  value: string;
+  label: string;
+  desc?: string;
+}
+
+interface Question {
+  id: string;
+  type: string;
+  label: string;
+  placeholder?: string;
+  required?: boolean;
+  options?: Option[];
+}
+
+interface Slide {
+  id: number;
+  section: string;
+  emoji: string;
+  title: string;
+  subtitle: string;
+  questions: Question[];
+}
+
+export interface Props {
+  slide: Slide;
+  slideIndex: number;
+}
+
 const { slide, slideIndex } = Astro.props;
 ---
 
@@ -18,7 +47,7 @@ const { slide, slideIndex } = Astro.props;
     <p class="slide-subtitle">{slide.subtitle}</p>
 
     <div class="slide-questions">
-      {slide.questions.map((q: any) => (
+      {slide.questions.map((q) => (
         <SurveyQuestion q={q} />
       ))}
     </div>

@@ -177,7 +177,7 @@ import SurveyNavigation from '../components/survey/SurveyNavigation.astro';
   const TOTAL_SLIDES = document.querySelectorAll('.survey-slide[data-slide]').length - 1; // excluye la slide final
 
   let currentSlide = 0;
-  let answers: Record<string, unknown> = {};
+  const answers: Record<string, unknown> = {};
 
   // Elements
   const progressBar = document.getElementById('progress-bar')!;
@@ -364,7 +364,6 @@ import SurveyNavigation from '../components/survey/SurveyNavigation.astro';
 
       stars.forEach((star, idx) => {
         const input = star.querySelector<HTMLInputElement>('.star-input')!;
-        const icon = star.querySelector<HTMLElement>('.star-icon')!;
         const val = idx + 1;
 
         star.addEventListener('mouseenter', () => {

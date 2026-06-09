@@ -1,4 +1,23 @@
 ---
+interface Option {
+  value: string;
+  label: string;
+  desc?: string;
+}
+
+interface Question {
+  id: string;
+  type: string;
+  label: string;
+  placeholder?: string;
+  required?: boolean;
+  options?: Option[];
+}
+
+export interface Props {
+  q: Question;
+}
+
 const { q } = Astro.props;
 ---
 
@@ -31,7 +50,7 @@ const { q } = Astro.props;
 
   {q.type === 'radio' && (
     <div class="survey-options" role="radiogroup">
-      {q.options?.map((opt: any) => (
+      {q.options?.map((opt) => (
         <>
           <label class="survey-option" data-value={opt.value}>
             <input
@@ -63,7 +82,7 @@ const { q } = Astro.props;
 
   {q.type === 'checkbox' && (
     <div class="survey-options" role="group">
-      {q.options?.map((opt: any) => (
+      {q.options?.map((opt) => (
         <>
           <label class="survey-option" data-value={opt.value}>
             <input
