@@ -1,0 +1,109 @@
+---
+import { slides, SECONDS_PER_SLIDE } from '../../data/survey';
+
+const totalMinutes = Math.ceil((slides.length * SECONDS_PER_SLIDE) / 60);
+---
+
+<div class="survey-header">
+  <div class="survey-meta">
+    <span class="survey-step-label" id="step-label">Sección 1 de {slides.length}</span>
+    <span class="survey-time-left" id="time-left">~{totalMinutes} min restantes</span>
+  </div>
+  <div class="survey-progress-bar-wrap">
+    <div class="survey-progress-bar" id="progress-bar" style="width: 0%"></div>
+  </div>
+  <div class="survey-steps-dots" id="steps-dots">
+    {slides.map((slide, i) => (
+      <button
+        class={`step-dot ${i === 0 ? 'active' : ''}`}
+        data-step={i}
+        aria-label={`Ir a sección ${i + 1}: ${slide.section}`}
+        type="button"
+      ></button>
+    ))}
+  </div>
+</div>
+
+<style>
+  /* ===== SURVEY HEADER / PROGRESS ===== */
+  .survey-header {
+    position: sticky;
+    top: 60px;
+    z-index: 10;
+    background: rgba(14, 17, 21, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 1rem 0 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .survey-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .survey-step-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #9172e9;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .survey-time-left {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .survey-time-left::before {
+    content: '⏱';
+  }
+
+  .survey-progress-bar-wrap {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .survey-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #9172e9, #d946ef);
+    border-radius: 99px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px rgba(145, 114, 233, 0.6);
+  }
+
+  .survey-steps-dots {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .step-dot.active {
+    width: 24px;
+    background: #9172e9;
+    box-shadow: 0 0 8px rgba(145, 114, 233, 0.5);
+  }
+
+  .step-dot.done {
+    background: rgba(145, 114, 233, 0.4);
+  }
+</style>

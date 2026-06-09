@@ -1,0 +1,499 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/sections/Header.astro';
+import Footer from '../components/sections/Footer.astro';
+
+import { slides } from '../data/survey';
+import SurveyHero from '../components/survey/SurveyHero.astro';
+import SurveyProgress from '../components/survey/SurveyProgress.astro';
+import SurveySlide from '../components/survey/SurveySlide.astro';
+import SurveyNavigation from '../components/survey/SurveyNavigation.astro';
+---
+
+<Layout
+  title="Encuesta TimeCup League — Ayúdanos a mejorar"
+  description="Completa nuestra encuesta y ayúdanos a hacer TimeCup League aún mejor. Solo tardas 3 minutos."
+>
+  <Header />
+
+  <main id="encuesta-main">
+    <SurveyHero />
+
+    <!-- Carousel encuesta -->
+    <section class="survey-section" id="survey-section">
+      <div class="survey-wrapper">
+        <SurveyProgress />
+
+        <!-- Slides container -->
+        <div class="slides-container" id="slides-container">
+          {slides.map((slide, slideIndex) => (
+            <SurveySlide slide={slide} slideIndex={slideIndex} />
+          ))}
+
+          <!-- Slide final: agradecimiento -->
+          <div class="survey-slide" data-slide={slides.length} id={`slide-${slides.length}`}>
+            <div class="slide-inner slide-final">
+              <div class="final-icon">🎉</div>
+              <h2 class="slide-title">¡Muchas gracias!</h2>
+              <p class="slide-subtitle">Tu respuesta nos ayuda a hacer TimeCup League la mejor liga de CrossFit. ¡Hasta la próxima temporada!</p>
+              <div class="final-actions">
+                <a href="/" class="btn-primary survey-btn-primary">Volver al inicio</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <SurveyNavigation />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* ===== SURVEY SECTION ===== */
+  .survey-section {
+    background: #0e1115;
+    padding: 2rem 1rem 6rem;
+    display: none;
+  }
+
+  .survey-section.visible {
+    display: block;
+  }
+
+  .survey-wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .slides-container {
+    position: relative;
+    min-height: 420px;
+  }
+
+  /* The survey-slide class is also used by the final slide here */
+  .survey-slide {
+    display: none;
+    animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .survey-slide.active {
+    display: block;
+  }
+
+  .survey-slide.exit {
+    animation: slideOut 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideOut {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-24px);
+    }
+  }
+
+  /* ===== SLIDE FINAL ===== */
+  .slide-inner {
+    padding: 2rem 0;
+  }
+
+  .slide-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    text-transform: none;
+  }
+
+  .slide-subtitle {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .slide-final {
+    text-align: center;
+    padding: 4rem 0;
+  }
+
+  .final-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    animation: bounce 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes bounce {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .final-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .survey-btn-primary {
+    background: linear-gradient(135deg, #9172e9, #4714db);
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-weight: 500;
+    box-shadow: 0 4px 20px rgba(71, 20, 219, 0.35);
+    transition: all 0.2s ease;
+    color: white;
+    text-decoration: none;
+  }
+
+  .survey-btn-primary:hover {
+    transform: translateY(-2px);
+  }
+</style>
+
+<script>
+  const SECONDS_PER_SLIDE = 45;
+  const TOTAL_SLIDES = document.querySelectorAll('.survey-slide[data-slide]').length - 1; // excluye la slide final
+
+  let currentSlide = 0;
+  let answers: Record<string, unknown> = {};
+
+  // Elements
+  const progressBar = document.getElementById('progress-bar')!;
+  const stepLabel = document.getElementById('step-label')!;
+  const timeLeft = document.getElementById('time-left')!;
+  const navFraction = document.getElementById('nav-fraction')!;
+  const btnBack = document.getElementById('btn-back') as HTMLButtonElement;
+  const btnNext = document.getElementById('btn-next') as HTMLButtonElement;
+  const stepsDotsEl = document.getElementById('steps-dots')!;
+  const surveySection = document.getElementById('survey-section')!;
+  const surveyNavigation = document.getElementById('survey-navigation')!;
+  const btnStart = document.getElementById('btn-start');
+
+  // Scroll to survey section on start
+  btnStart?.addEventListener('click', () => {
+    surveySection.classList.add('visible');
+    surveySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  function getSlideEl(index: number): HTMLElement | null {
+    return document.querySelector(`.survey-slide[data-slide="${index}"]`);
+  }
+
+  function updateUI() {
+    const isFinal = currentSlide >= TOTAL_SLIDES;
+    const progress = isFinal ? 100 : ((currentSlide) / TOTAL_SLIDES) * 100;
+    const remaining = isFinal ? 0 : Math.ceil(((TOTAL_SLIDES - currentSlide) * SECONDS_PER_SLIDE) / 60);
+
+    // Progress bar
+    if (progressBar) progressBar.style.width = `${progress}%`;
+
+    // Labels
+    if (!isFinal) {
+      if (stepLabel) stepLabel.textContent = `Sección ${currentSlide + 1} de ${TOTAL_SLIDES}`;
+      if (timeLeft) timeLeft.textContent = remaining <= 1 ? '~1 min restante' : `~${remaining} min restantes`;
+      if (navFraction) navFraction.textContent = `${currentSlide + 1} / ${TOTAL_SLIDES}`;
+    } else {
+      if (stepLabel) stepLabel.textContent = '¡Encuesta completada!';
+      if (timeLeft) timeLeft.textContent = '✓ Enviada';
+      if (navFraction) navFraction.textContent = '';
+    }
+
+    // Dots
+    const dots = stepsDotsEl?.querySelectorAll('.step-dot');
+    if (dots) {
+      dots.forEach((dot, i) => {
+        dot.classList.remove('active', 'done');
+        if (i < currentSlide) dot.classList.add('done');
+        if (i === currentSlide) dot.classList.add('active');
+      });
+    }
+
+    // Buttons
+    if (btnBack) btnBack.disabled = currentSlide === 0;
+
+    if (isFinal) {
+      if (surveyNavigation) surveyNavigation.style.display = 'none';
+    } else if (currentSlide === TOTAL_SLIDES - 1) {
+      if (btnNext) {
+        btnNext.textContent = 'Enviar encuesta ✓';
+        btnNext.classList.add('submit-btn');
+      }
+    } else {
+      if (btnNext) {
+        btnNext.innerHTML = `Siguiente <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+        btnNext.classList.remove('submit-btn');
+      }
+    }
+  }
+
+  function goToSlide(next: number, direction: 'forward' | 'backward' = 'forward') {
+    const current = getSlideEl(currentSlide);
+    const target = getSlideEl(next);
+
+    if (!current || !target) return;
+
+    current.classList.remove('active');
+    target.classList.remove('reverse');
+    if (direction === 'backward') target.classList.add('reverse');
+    target.classList.add('active');
+
+    currentSlide = next;
+    updateUI();
+  }
+
+  function collectCurrentAnswers() {
+    const slide = getSlideEl(currentSlide);
+    if (!slide) return;
+
+    const inputs = slide.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea');
+    inputs.forEach((inp) => {
+      if (inp instanceof HTMLInputElement && (inp.type === 'radio' || inp.type === 'checkbox')) {
+        if (inp.checked) {
+          const key = inp.name;
+          if (inp.type === 'checkbox') {
+            const existing = (answers[key] as string[]) || [];
+            existing.push(inp.value);
+            answers[key] = existing;
+          } else {
+            answers[key] = inp.value;
+          }
+        }
+      } else {
+        if (inp.id) {
+          if (inp.classList.contains('other-input')) {
+            if (inp.style.display !== 'none' && inp.value.trim() !== '') {
+              answers[inp.id] = inp.value;
+            }
+          } else {
+            answers[inp.id] = inp.value;
+          }
+        }
+      }
+    });
+  }
+
+  // Option click interactivity
+  function setupOptions() {
+    document.querySelectorAll<HTMLElement>('.survey-option').forEach((option) => {
+      const input = option.querySelector<HTMLInputElement>('.option-input')!;
+      if (!input) return;
+
+      option.addEventListener('click', (e) => {
+        e.preventDefault();
+        const container = option.closest('.survey-options');
+        if (input.type === 'radio') {
+          const siblings = container?.querySelectorAll('.survey-option');
+          siblings?.forEach((s) => s.classList.remove('selected'));
+          option.classList.add('selected');
+          input.checked = true;
+        } else {
+          option.classList.toggle('selected');
+          input.checked = !input.checked;
+        }
+
+        // Mostrar u ocultar el campo de texto "Otro" si existe
+        if (container) {
+          container.querySelectorAll<HTMLInputElement>('.other-input').forEach((otherInp) => {
+            const isOtra = container.querySelector<HTMLInputElement>(`input[value="otra"]`)?.checked;
+            const isOtro = container.querySelector<HTMLInputElement>(`input[value="otro"]`)?.checked;
+            if (isOtra || isOtro) {
+              otherInp.style.display = 'block';
+              if (input.value === 'otro' || input.value === 'otra') {
+                otherInp.focus();
+              }
+            } else {
+              otherInp.style.display = 'none';
+              otherInp.value = '';
+            }
+          });
+        }
+      });
+    });
+
+    // NPS
+    document.querySelectorAll<HTMLElement>('.nps-option').forEach((opt) => {
+      const input = opt.querySelector<HTMLInputElement>('.nps-input')!;
+      opt.addEventListener('click', (e) => {
+        e.preventDefault();
+        const group = opt.closest('.nps-scale');
+        group?.querySelectorAll('.nps-option').forEach((o) => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        if (input) input.checked = true;
+      });
+    });
+
+    // Scale 1-5
+    document.querySelectorAll<HTMLElement>('.scale5-option').forEach((opt) => {
+      const input = opt.querySelector<HTMLInputElement>('.scale5-input')!;
+      opt.addEventListener('click', (e) => {
+        e.preventDefault();
+        const track = opt.closest('.scale5-track');
+        track?.querySelectorAll('.scale5-option').forEach((o) => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        if (input) input.checked = true;
+      });
+    });
+
+    // Stars rating
+    const starLabels = ['', 'Muy malo 😞', 'Regular 😐', 'Bien 🙂', 'Muy bien 😄', 'Excelente! 🤩'];
+    document.querySelectorAll<HTMLElement>('.stars-container').forEach((container) => {
+      const stars = container.querySelectorAll<HTMLElement>('.star-option');
+      const hint = container.querySelector<HTMLElement>('.stars-hint');
+
+      stars.forEach((star, idx) => {
+        const input = star.querySelector<HTMLInputElement>('.star-input')!;
+        const icon = star.querySelector<HTMLElement>('.star-icon')!;
+        const val = idx + 1;
+
+        star.addEventListener('mouseenter', () => {
+          stars.forEach((s, i) => {
+            s.querySelector('.star-icon')?.classList.toggle('lit', i <= idx);
+          });
+          if (hint) hint.textContent = starLabels[val];
+        });
+
+        star.addEventListener('mouseleave', () => {
+          const selected = container.querySelector<HTMLInputElement>('.star-input:checked');
+          const selectedVal = selected ? parseInt(selected.value) : 0;
+          stars.forEach((s, i) => {
+            s.querySelector('.star-icon')?.classList.toggle('lit', i < selectedVal);
+          });
+          if (hint) hint.textContent = selectedVal ? starLabels[selectedVal] : '';
+        });
+
+        star.addEventListener('click', () => {
+          if (input) input.checked = true;
+          stars.forEach((s, i) => {
+            s.querySelector('.star-icon')?.classList.toggle('lit', i <= idx);
+          });
+          if (hint) hint.textContent = starLabels[val];
+        });
+      });
+    });
+  }
+
+  // Dot navigation
+  stepsDotsEl?.querySelectorAll<HTMLButtonElement>('.step-dot').forEach((dot) => {
+    dot.addEventListener('click', () => {
+      const step = parseInt(dot.dataset.step || '0');
+      if (step < currentSlide) {
+        goToSlide(step, 'backward');
+      } else if (step > currentSlide) {
+        goToSlide(step, 'forward');
+      }
+    });
+  });
+
+  function validateCurrentSlide() {
+    const slide = getSlideEl(currentSlide);
+    if (!slide) return true;
+
+    let isValid = true;
+    const questions = slide.querySelectorAll('.question-block');
+    
+    questions.forEach((block) => {
+      let answered = false;
+
+      // Check text inputs (ignoring hidden 'other' inputs)
+      const textInputs = block.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input[type="text"]:not(.other-input), textarea');
+      textInputs.forEach((t) => {
+        if (t.value.trim() !== '') answered = true;
+      });
+
+      // Check radios / checkboxes
+      const checkInputs = block.querySelectorAll<HTMLInputElement>('input[type="radio"], input[type="checkbox"]');
+      if (checkInputs.length > 0) {
+        checkInputs.forEach((c) => {
+          if (c.checked) answered = true;
+        });
+      } else if (textInputs.length === 0) {
+        // Fallback for custom components like NPS if they used standard inputs
+        answered = true;
+      }
+
+      if (!answered) {
+        isValid = false;
+        block.classList.add('error');
+        setTimeout(() => block.classList.remove('error'), 3000);
+      } else {
+        block.classList.remove('error');
+      }
+    });
+
+    return isValid;
+  }
+
+  btnNext?.addEventListener('click', async () => {
+    if (!validateCurrentSlide()) {
+      const firstError = document.querySelector('.question-block.error');
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
+
+    collectCurrentAnswers();
+
+    // Si estamos en la última pregunta, enviamos a Google Sheets
+    if (currentSlide === TOTAL_SLIDES - 1) {
+      const originalText = btnNext.textContent;
+      btnNext.textContent = 'Enviando...';
+      btnNext.disabled = true;
+
+      try {
+        await fetch('https://script.google.com/macros/s/AKfycbxL5IeV5SnBCuGkWf3PPIeoLC34fClXMbpBKrvXyuACpTybprhq3eo5hClXolvb4ZOAyA/exec', {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: JSON.stringify(answers),
+        });
+      } catch (e) {
+        window.console.error('Error enviando respuestas:', e);
+      }
+
+      btnNext.textContent = originalText;
+      btnNext.disabled = false;
+      goToSlide(currentSlide + 1, 'forward');
+      window.scrollTo({ top: surveySection.offsetTop - 60, behavior: 'smooth' });
+
+    } else if (currentSlide < TOTAL_SLIDES - 1) {
+      goToSlide(currentSlide + 1, 'forward');
+      window.scrollTo({ top: surveySection.offsetTop - 60, behavior: 'smooth' });
+    }
+  });
+
+  btnBack?.addEventListener('click', () => {
+    if (currentSlide > 0) {
+      goToSlide(currentSlide - 1, 'backward');
+      window.scrollTo({ top: surveySection.offsetTop - 60, behavior: 'smooth' });
+    }
+  });
+
+  // Init
+  setupOptions();
+  updateUI();
+</script>

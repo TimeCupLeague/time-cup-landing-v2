@@ -1,0 +1,137 @@
+---
+import { slides, SECONDS_PER_SLIDE } from '../../data/survey';
+
+const totalMinutes = Math.ceil((slides.length * SECONDS_PER_SLIDE) / 60);
+---
+
+<section class="survey-hero">
+  <div class="survey-hero-content">
+    <h1>Tu opinión hace <img src="/img/logo-timecup.svg" alt="TimeCup" class="hero-logo-inline" /> mejor</h1>
+    <p>Tarda menos de <strong>{totalMinutes} minutos</strong> y nos ayudarás a crear la mejor liga de CrossFit.</p>
+    <button class="btn-start-survey" id="btn-start">Empezar &rarr;</button>
+  </div>
+  <div class="survey-hero-visual">
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="stat-number">{slides.length}</span>
+        <span class="stat-label">secciones</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="stat-number">{totalMinutes}</span>
+        <span class="stat-label">minutos</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">anónima</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ===== HERO SECTION ===== */
+  .survey-hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    padding: 8rem 2rem 4rem;
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(71, 20, 219, 0.25) 0%, transparent 70%),
+                #111517;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .survey-hero-content {
+    max-width: 680px;
+  }
+
+  .survey-hero h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .hero-logo-inline {
+    height: 0.85em;
+    vertical-align: baseline;
+    margin: 0 0.15em;
+    position: relative;
+    top: 2px;
+  }
+
+  .survey-hero p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 auto 2.5rem auto;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  .btn-start-survey {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #9172e9, #4714db);
+    color: #fff;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(71, 20, 219, 0.4);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .btn-start-survey:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(71, 20, 219, 0.55);
+  }
+
+  .hero-stats {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem 2.5rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0 2rem;
+  }
+
+  .stat-number {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #9172e9;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-stat-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+</style>
