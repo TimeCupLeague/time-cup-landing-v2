@@ -481,12 +481,36 @@ const { q } = Astro.props;
 
   @media (max-width: 640px) {
     .nps-scale {
-      gap: 4px;
+      gap: 2px;
+      flex-wrap: nowrap;
     }
 
     .nps-number {
-      height: 40px;
-      font-size: 0.8rem;
+      height: 38px;
+      font-size: 0.75rem;
+      border-radius: 6px;
+    }
+    
+    .nps-option {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .scale5-number {
+      height: 44px;
+      font-size: 1rem;
+    }
+    
+    .star-icon {
+      font-size: 2.2rem;
+    }
+    
+    .question-label {
+      font-size: 1.1rem;
+    }
+    
+    .survey-option {
+      padding: 12px 14px;
     }
   }
 </style>

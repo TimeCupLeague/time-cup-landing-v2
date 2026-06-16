@@ -8,7 +8,7 @@ const totalMinutes = Math.ceil((slides.length * SECONDS_PER_SLIDE) / 60);
   <div class="survey-hero-content">
     <h1>Tu opinión hace <img src="/img/logo-timecup.svg" alt="TimeCup" class="hero-logo-inline" /> mejor</h1>
     <p>Tarda menos de <strong>{totalMinutes} minutos</strong> y nos ayudarás a crear la mejor liga de CrossFit.</p>
-    <button class="btn-start-survey" id="btn-start">Empezar &rarr;</button>
+    <button class="btn-primary" id="btn-start" style="font-family: var(--font-primary, 'Outfit'); margin: 0 auto; display: inline-flex; cursor: pointer;">Empezar &rarr;</button>
   </div>
   <div class="survey-hero-visual">
     <div class="hero-stats">
@@ -74,27 +74,7 @@ const totalMinutes = Math.ceil((slides.length * SECONDS_PER_SLIDE) / 60);
     line-height: 1.6;
   }
 
-  .btn-start-survey {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(135deg, #9172e9, #4714db);
-    color: #fff;
-    border: none;
-    padding: 16px 40px;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 32px rgba(71, 20, 219, 0.4);
-    font-family: 'Poppins', sans-serif;
-  }
 
-  .btn-start-survey:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(71, 20, 219, 0.55);
-  }
 
   .hero-stats {
     display: flex;
@@ -133,5 +113,34 @@ const totalMinutes = Math.ceil((slides.length * SECONDS_PER_SLIDE) / 60);
     width: 1px;
     height: 40px;
     background: rgba(255, 255, 255, 0.1);
+  }
+
+  @media (max-width: 640px) {
+    .survey-hero {
+      padding: 6rem 1rem 3rem;
+      gap: 2rem;
+    }
+    .survey-hero h1 {
+      font-size: 2rem;
+    }
+    .survey-hero p {
+      font-size: 1rem;
+    }
+    .hero-stats {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 1rem;
+      gap: 10px;
+    }
+    .hero-stat {
+      padding: 0 0.5rem;
+    }
+    .stat-number {
+      font-size: 1.5rem;
+    }
+    .hero-stat-divider {
+      display: none;
+    }
   }
 </style>

@@ -170,14 +170,38 @@ import SurveyNavigation from '../components/survey/SurveyNavigation.astro';
   .survey-btn-primary:hover {
     transform: translateY(-2px);
   }
+
+  @media (max-width: 640px) {
+    .slide-final {
+      padding: 2rem 0;
+    }
+    .survey-section {
+      padding: 1rem 1rem 4rem;
+    }
+  }
 </style>
 
 <script>
+  import { slides } from '../data/survey';
+
   const SECONDS_PER_SLIDE = 45;
   const TOTAL_SLIDES = document.querySelectorAll('.survey-slide[data-slide]').length - 1; // excluye la slide final
 
   let currentSlide = 0;
   const answers: Record<string, unknown> = {};
+
+  // Initialize all questions with empty values
+  slides.forEach((slide) => {
+    slide.questions.forEach((q) => {
+      answers[q.id] = '';
+      if (q.options) {
+        const hasOther = q.options.some((opt) => opt.value === 'otro' || opt.value === 'otra');
+        if (hasOther) {
+          answers[`${q.id}_other_text`] = '';
+        }
+      }
+    });
+  });
 
   // Elements
   const progressBar = document.getElementById('progress-bar')!;
@@ -265,29 +289,36 @@ import SurveyNavigation from '../components/survey/SurveyNavigation.astro';
 
   function collectCurrentAnswers() {
     const slide = getSlideEl(currentSlide);
-    if (!slide) return;
+    if (!slide || currentSlide >= slides.length) return;
 
-    const inputs = slide.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea');
-    inputs.forEach((inp) => {
-      if (inp instanceof HTMLInputElement && (inp.type === 'radio' || inp.type === 'checkbox')) {
-        if (inp.checked) {
-          const key = inp.name;
-          if (inp.type === 'checkbox') {
-            const existing = (answers[key] as string[]) || [];
-            existing.push(inp.value);
-            answers[key] = existing;
-          } else {
-            answers[key] = inp.value;
-          }
+    const currentSlideData = slides[currentSlide];
+    currentSlideData.questions.forEach((q) => {
+      if (q.type === 'checkbox') {
+        const checkedBoxes = slide.querySelectorAll<HTMLInputElement>(`input[name="${q.id}"]:checked`);
+        if (checkedBoxes.length > 0) {
+          const values: string[] = [];
+          checkedBoxes.forEach((cb) => values.push(cb.value));
+          answers[q.id] = values;
+        } else {
+          answers[q.id] = '';
         }
+      } else if (q.type === 'radio' || q.type === 'nps' || q.type === 'scale5' || q.type === 'stars') {
+        const checkedRadio = slide.querySelector<HTMLInputElement>(`input[name="${q.id}"]:checked`);
+        answers[q.id] = checkedRadio ? checkedRadio.value : '';
       } else {
-        if (inp.id) {
-          if (inp.classList.contains('other-input')) {
-            if (inp.style.display !== 'none' && inp.value.trim() !== '') {
-              answers[inp.id] = inp.value;
-            }
+        const textInput = slide.querySelector<HTMLInputElement | HTMLTextAreaElement>(`#${q.id}`);
+        answers[q.id] = textInput ? textInput.value.trim() : '';
+      }
+
+      // Handle the 'otro'/'otra' text input
+      if (q.options) {
+        const hasOther = q.options.some((opt) => opt.value === 'otro' || opt.value === 'otra');
+        if (hasOther) {
+          const otherInput = slide.querySelector<HTMLInputElement>(`#${q.id}_other_text`);
+          if (otherInput && otherInput.style.display !== 'none' && otherInput.value.trim() !== '') {
+            answers[`${q.id}_other_text`] = otherInput.value.trim();
           } else {
-            answers[inp.id] = inp.value;
+            answers[`${q.id}_other_text`] = '';
           }
         }
       }
@@ -407,12 +438,22 @@ import SurveyNavigation from '../components/survey/SurveyNavigation.astro';
 
   function validateCurrentSlide() {
     const slide = getSlideEl(currentSlide);
-    if (!slide) return true;
+    if (!slide || currentSlide >= slides.length) return true;
 
     let isValid = true;
     const questions = slide.querySelectorAll('.question-block');
+    const currentSlideData = slides[currentSlide];
     
     questions.forEach((block) => {
+      const qId = block.id.replace('question-', '');
+      const questionData = currentSlideData.questions.find((q) => q.id === qId);
+
+      // If the question is not required, it is always valid
+      if (questionData && !questionData.required) {
+        block.classList.remove('error');
+        return;
+      }
+
       let answered = false;
 
       // Check text inputs (ignoring hidden 'other' inputs)
