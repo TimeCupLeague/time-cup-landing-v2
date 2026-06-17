@@ -1,6 +1,30 @@
 export const SECONDS_PER_SLIDE = 50
 
-export const slides = [
+export interface Option {
+  value: string
+  label: string
+  desc?: string
+}
+
+export interface Question {
+  id: string
+  type: string
+  label: string
+  placeholder?: string
+  required?: boolean
+  options?: Option[]
+}
+
+export interface Slide {
+  id: number
+  section: string
+  emoji: string
+  title: string
+  subtitle: string
+  questions: Question[]
+}
+
+export const slides: Slide[] = [
   // ===== 1. INFORMACIÓN GENERAL =====
   {
     id: 1,
@@ -66,33 +90,80 @@ export const slides = [
         label: 'Valora tu experiencia general en TimeCup',
         required: true,
       },
-      { id: 'q2_recomiendas', type: 'nps', label: '¿Recomendarías TimeCup a otros atletas?', required: true },
       {
-        id: 'q2_mas_gustado',
-        type: 'textarea',
-        label: '¿Qué es lo que MÁS te ha gustado?',
-        placeholder: 'Cuéntanos qué es lo que más destacarías...',
-        required: true,
-      },
-      {
-        id: 'q2_mejorarias',
-        type: 'textarea',
-        label: '¿Qué mejorarías sí o sí?',
-        placeholder: '¿Qué cambiarías sin duda?',
+        id: 'q2_recomiendas',
+        type: 'nps',
+        label: '¿Recomendarías TimeCup a otros atletas?',
         required: true,
       },
     ],
   },
-  // ===== 3. WODS Y COMPETICIÓN =====
+  // ===== 3. FORMATO DE LIGA =====
   {
     id: 3,
-    section: 'WODs y competición',
-    emoji: '🏋️',
-    title: 'Los WODs y la competición',
-    subtitle: 'Tu experiencia con los entrenamientos y el sistema de puntuación.',
+    section: 'Formato de liga',
+    emoji: '🏆',
+    title: 'El formato de la liga',
+    subtitle: 'Valora el formato, la frecuencia y la estructura de la competición.',
     questions: [
       {
-        id: 'q3_nivel_wods',
+        id: 'q3_frecuencia',
+        type: 'radio',
+        label: '¿Qué te parece un WOD cada dos semanas?',
+        required: true,
+        options: [
+          { value: 'mucho_tiempo', label: 'Mucho tiempo entre wods', desc: '' },
+          { value: 'bien', label: 'Está bien', desc: '' },
+          { value: 'poco_tiempo', label: 'Poco tiempo entre wods', desc: '' },
+        ],
+      },
+      {
+        id: 'q3_duracion',
+        type: 'radio',
+        label: '¿La duración de la temporada te pareció correcta?',
+        required: true,
+        options: [
+          { value: 'muy_corta', label: 'Muy corta', desc: '' },
+          { value: 'correcta', label: 'Correcta', desc: '' },
+          { value: 'muy_larga', label: 'Demasiado larga', desc: '' },
+        ],
+      },
+      {
+        id: 'q3_presencial',
+        type: 'radio',
+        label: '¿Te gusta que haya evento presencial final?',
+        required: true,
+        options: [
+          { value: 'si_muchisimo', label: 'Sí, muchísimo', desc: '' },
+          { value: 'si', label: 'Sí', desc: '' },
+          { value: 'me_da_igual', label: 'Me da igual', desc: '' },
+          { value: 'no', label: 'No', desc: '' },
+        ],
+      },
+      {
+        id: 'q3_repetir',
+        type: 'radio',
+        label: '¿Participarías en otra temporada?',
+        required: true,
+        options: [
+          { value: 'si', label: 'Sí', desc: '' },
+          { value: 'prob_si', label: 'Probablemente sí', desc: '' },
+          { value: 'no_lo_se', label: 'No lo sé', desc: '' },
+          { value: 'no', label: 'No', desc: '' },
+        ],
+      },
+    ],
+  },
+  // ===== 4. WODS Y EVENTO PRESENCIAL =====
+  {
+    id: 4,
+    section: 'WODs y evento presencial',
+    emoji: '🏋️',
+    title: 'Los WODs y el evento final',
+    subtitle: 'Tu experiencia con los entrenamientos y el evento presencial.',
+    questions: [
+      {
+        id: 'q4_nivel_wods',
         type: 'radio',
         label: '¿Qué te ha parecido el nivel de los WODs?',
         required: true,
@@ -105,107 +176,39 @@ export const slides = [
         ],
       },
       {
-        id: 'q3_variedad',
-        type: 'scale5',
-        label: '¿Cómo valorarías la variedad de los WODs?',
-        required: true,
-      },
-      {
-        id: 'q3_equilibrados',
-        type: 'scale5',
-        label: '¿Los WODs te parecieron equilibrados?',
-        required: true,
-      },
-      { id: 'q3_puntuacion', type: 'scale5', label: '¿Te gustó el sistema de puntuación?', required: true },
-      {
-        id: 'q3_explicaciones',
+        id: 'q4_explicaciones',
         type: 'scale5',
         label: '¿Las explicaciones de los WODs eran claras?',
         required: true,
       },
       {
-        id: 'q3_wods_faltantes',
+        id: 'q4_evento',
+        type: 'scale5',
+        label: '¿Cómo valorarías el evento final?',
+        required: true,
+      },
+      {
+        id: 'q4_ambiente',
+        type: 'scale5',
+        label: '¿Qué te pareció el ambiente del evento?',
+        required: true,
+      },
+      {
+        id: 'q4_mejora_evento',
         type: 'textarea',
-        label: '¿Has echado de menos algún tipo de movimiento o algún tipo de WOD?',
-        required: true,
+        label: '¿Qué mejorarías del evento presencial?',
+        placeholder: 'Cuéntanos qué cambiarías o qué faltó...',
+        required: false,
       },
     ],
   },
-  // ===== 4. FORMATO DE LIGA =====
-  {
-    id: 4,
-    section: 'Formato de liga',
-    emoji: '🏆',
-    title: 'El formato de la liga',
-    subtitle: 'Valora el formato, la frecuencia y la estructura de la competición.',
-    questions: [
-      {
-        id: 'q4_frecuencia',
-        type: 'radio',
-        label: '¿Qué te parece un WOD cada dos semanas?',
-        required: true,
-        options: [
-          { value: 'mucho_tiempo', label: 'Mucho tiempo entre wods', desc: '' },
-          { value: 'bien', label: 'Está bien', desc: '' },
-          { value: 'poco_tiempo', label: 'Poco tiempo entre wods', desc: '' },
-        ],
-      },
-      {
-        id: 'q4_duracion',
-        type: 'radio',
-        label: '¿La duración de la temporada te pareció correcta?',
-        required: true,
-        options: [
-          { value: 'muy_corta', label: 'Muy corta', desc: '' },
-          { value: 'correcta', label: 'Correcta', desc: '' },
-          { value: 'muy_larga', label: 'Demasiado larga', desc: '' },
-        ],
-      },
-      {
-        id: 'q4_presencial',
-        type: 'radio',
-        label: '¿Te gusta que haya evento presencial final?',
-        required: true,
-        options: [
-          { value: 'si_muchisimo', label: 'Sí, muchísimo', desc: '' },
-          { value: 'si', label: 'Sí', desc: '' },
-          { value: 'me_da_igual', label: 'Me da igual', desc: '' },
-          { value: 'no', label: 'No', desc: '' },
-        ],
-      },
-      {
-        id: 'q4_repetir',
-        type: 'radio',
-        label: '¿Participarías en otra temporada?',
-        required: true,
-        options: [
-          { value: 'si', label: 'Sí', desc: '' },
-          { value: 'prob_si', label: 'Probablemente sí', desc: '' },
-          { value: 'no_lo_se', label: 'No lo sé', desc: '' },
-          { value: 'no', label: 'No', desc: '' },
-        ],
-      },
-      {
-        id: 'q4_precio',
-        type: 'radio',
-        label: '¿Qué te parece el precio por temporada comparado con otras competiciones?',
-        required: true,
-        options: [
-          { value: 'muy_barato', label: 'Muy barato', desc: '' },
-          { value: 'barato', label: 'Barato', desc: '' },
-          { value: 'bien_precio', label: 'Bien de precio', desc: '' },
-          { value: 'caro', label: 'Demasiado caro', desc: '' },
-        ],
-      },
-    ],
-  },
-  // ===== 5. APP Y SUBIDA DE RESULTADOS =====
+  // ===== 5. APP: VALORACIÓN Y FUNCIONALIDADES =====
   {
     id: 5,
-    section: 'App y resultados',
+    section: 'App y funcionalidades',
     emoji: '📱',
-    title: 'La aplicación y la plataforma',
-    subtitle: 'Tu experiencia usando la app y subiendo resultados.',
+    title: 'La app: valoración y funcionalidades',
+    subtitle: 'Tu experiencia con la plataforma y qué te gustaría ver en la próxima versión.',
     questions: [
       {
         id: 'q5_app_valoracion',
@@ -213,241 +216,15 @@ export const slides = [
         label: '¿Cómo valorarías la aplicación/plataforma?',
         required: true,
       },
-      { id: 'q5_subida_facil', type: 'scale5', label: '¿Fue fácil subir resultados?', required: true },
-      {
-        id: 'q5_problemas',
-        type: 'radio',
-        label: '¿Tuviste problemas técnicos?',
-        required: true,
-        options: [
-          { value: 'si', label: 'Sí', desc: '' },
-          { value: 'no', label: 'No', desc: '' },
-        ],
-      },
-      {
-        id: 'q5_problemas_desc',
-        type: 'textarea',
-        label: 'Si tuviste problemas, explica cuáles',
-        placeholder: 'Describe los problemas técnicos que encontraste...',
-        required: false,
-      },
       {
         id: 'q5_mejora_app',
         type: 'textarea',
         label: '¿Qué mejorarías de la app/plataforma?',
         placeholder: 'Cuéntanos qué echarías en falta o qué cambiarías...',
-        required: true,
-      },
-    ],
-  },
-  // ===== 6. COMUNICACIÓN Y ORGANIZACIÓN =====
-  {
-    id: 6,
-    section: 'Comunicación',
-    emoji: '📢',
-    title: 'Comunicación y organización',
-    subtitle: 'Valora cómo nos comunicamos contigo durante la temporada.',
-    questions: [
-      {
-        id: 'q6_comunicacion',
-        type: 'scale5',
-        label: '¿Cómo valorarías la comunicación de TimeCup?',
-        required: true,
+        required: false,
       },
       {
-        id: 'q6_normas',
-        type: 'scale5',
-        label: '¿Las normas y explicaciones estaban claras?',
-        required: true,
-      },
-      {
-        id: 'q6_acompanado',
-        type: 'scale5',
-        label: '¿Te sentiste acompañado/informado durante la temporada?',
-        required: true,
-      },
-      {
-        id: 'q6_canal',
-        type: 'radio',
-        label: '¿Qué canal usaste más?',
-        required: true,
-        options: [
-          { value: 'instagram', label: 'Instagram', desc: '' },
-          { value: 'whatsapp', label: 'WhatsApp', desc: '' },
-          { value: 'app', label: 'App', desc: '' },
-          { value: 'box', label: 'Box', desc: '' },
-          { value: 'otro', label: 'Otro', desc: '' },
-        ],
-      },
-      {
-        id: 'q6_mejora',
-        type: 'textarea',
-        label: '¿Qué mejorarías de la comunicación y organización?',
-        placeholder: 'Cualquier sugerencia sobre cómo comunicamos y organizamos la liga...',
-        required: true,
-      },
-    ],
-  },
-  // ===== 7. EVENTO PRESENCIAL =====
-  {
-    id: 7,
-    section: 'Evento presencial',
-    emoji: '🎉',
-    title: 'El evento final presencial',
-    subtitle: 'Cuéntanos qué tal fue la experiencia en el evento presencial.',
-    questions: [
-      { id: 'q7_evento', type: 'scale5', label: '¿Cómo valorarías el evento final?', required: true },
-      { id: 'q7_ambiente', type: 'scale5', label: '¿Qué te pareció el ambiente?', required: true },
-      {
-        id: 'q7_mejora',
-        type: 'textarea',
-        label: '¿Qué mejorarías del evento presencial?',
-        placeholder: 'Cuéntanos qué cambiarías o qué faltó...',
-        required: true,
-      },
-      {
-        id: 'q7_mas_de',
-        type: 'textarea',
-        label: '¿Has echado algo en falta en la competición?',
-        required: true,
-        placeholder: 'Más música, speaker, zona de público, más premios, más sponsors, etc..',
-      },
-    ],
-  },
-  // ===== 8. RETOS, LOGROS Y GAMIFICACIÓN =====
-  {
-    id: 8,
-    section: 'Retos y gamificación',
-    emoji: '🎮',
-    title: 'Retos, logros y gamificación',
-    subtitle: '¿La gamificación te motiva a competir más?',
-    questions: [
-      {
-        id: 'q8_logros',
-        type: 'radio',
-        label: '¿Te gusta desbloquear logros durante la temporada?',
-        required: true,
-        options: [
-          { value: 'si', label: 'Sí', desc: '' },
-          { value: 'no', label: 'No', desc: '' },
-          { value: 'me_da_igual', label: 'Me da igual', desc: '' },
-        ],
-      },
-      {
-        id: 'q8_logros_divertido',
-        type: 'radio',
-        label: '¿Crees que los logros hacen la competición más divertida?',
-        required: true,
-        options: [
-          { value: 'si', label: 'Sí', desc: '' },
-          { value: 'no', label: 'No', desc: '' },
-          { value: 'me_da_igual', label: 'Me da igual', desc: '' },
-        ],
-      },
-      {
-        id: 'q8_retos_opcionales',
-        type: 'radio',
-        label: '¿Te gusta tener retos opcionales además de los WODs oficiales?',
-        required: true,
-        options: [
-          { value: 'si', label: 'Sí', desc: '' },
-          { value: 'no', label: 'No', desc: '' },
-          { value: 'me_da_igual', label: 'Me da igual', desc: '' },
-        ],
-      },
-      {
-        id: 'q8_retos_fueraTemporada',
-        type: 'radio',
-        label: '¿Te gustaría que hiciéramos retos fuera de temporada?',
-        required: true,
-        options: [
-          { value: 'si', label: 'Sí', desc: '' },
-          { value: 'no', label: 'No', desc: '' },
-          { value: 'me_da_igual', label: 'Me da igual', desc: '' },
-        ],
-      },
-      {
-        id: 'q8_tipo_retos',
-        type: 'checkbox',
-        label: '¿Qué tipo de retos extra te gustaría ver?',
-        required: true,
-        options: [
-          { value: 'rapidos', label: 'Retos rápidos diarios', desc: '' },
-          { value: 'semanales', label: 'Retos semanales', desc: '' },
-          { value: 'equipos', label: 'Retos por equipos', desc: '' },
-          { value: 'fuerza', label: 'Challenges de fuerza', desc: '' },
-          { value: 'tecnicos', label: 'Retos técnicos/gimnásticos', desc: '' },
-          { value: 'cardio', label: 'Retos de cardio', desc: '' },
-          { value: 'otro', label: 'Otro', desc: '' },
-        ],
-      },
-    ],
-  },
-  // ===== 9. CATEGORÍAS Y DIVISIONES =====
-  {
-    id: 9,
-    section: 'Categorías y divisiones',
-    emoji: '📊',
-    title: 'Categorías y divisiones',
-    subtitle: 'Ayúdanos a definir mejor el sistema de categorías.',
-    questions: [
-      {
-        id: 'q9_estandares',
-        type: 'radio',
-        label: '¿Qué te parecen los estándares actuales de tu categoría?',
-        required: true,
-        options: [
-          { value: 'muy_exigentes', label: 'Demasiado exigentes, lo bajaría', desc: '' },
-          { value: 'exigentes_gustan', label: 'Exigentes, pero me gustan', desc: '' },
-          { value: 'adecuados', label: 'Adecuados', desc: '' },
-          { value: 'bajos', label: 'Bajos', desc: '' },
-          { value: 'muy_bajos', label: 'Demasiado bajos, los subiría', desc: '' },
-        ],
-      },
-      {
-        id: 'q9_suficientes',
-        type: 'radio',
-        label: '¿Te parecen suficientes las categorías actuales?',
-        required: true,
-        options: [
-          { value: 'si', label: 'Sí', desc: '' },
-          { value: 'no', label: 'No', desc: '' },
-        ],
-      },
-      {
-        id: 'q9_ascensos',
-        type: 'radio',
-        label: '¿Te interesaría un sistema de ascensos/descensos entre divisiones?',
-        required: true,
-        options: [
-          { value: 'si', label: 'Sí', desc: '' },
-          { value: 'no', label: 'No', desc: '' },
-          { value: 'no_lo_se', label: 'No lo sé', desc: '' },
-        ],
-      },
-      {
-        id: 'q9_independientes',
-        type: 'radio',
-        label: '¿Crees que las categorías femeninas, masculinas y mixtas deberían ser independientes?',
-        required: true,
-        options: [
-          { value: 'si', label: 'Sí', desc: '' },
-          { value: 'no', label: 'No', desc: '' },
-          { value: 'me_da_igual', label: 'Me da igual', desc: '' },
-        ],
-      },
-    ],
-  },
-  // ===== 10. FUNCIONALIDADES FUTURAS DE LA APP =====
-  {
-    id: 10,
-    section: 'App: funcionalidades',
-    emoji: '💡',
-    title: 'Funcionalidades futuras de la app',
-    subtitle: '¿Qué te gustaría encontrar en la próxima versión?',
-    questions: [
-      {
-        id: 'q10_funcionalidades',
+        id: 'q5_funcionalidades',
         type: 'checkbox',
         label: '¿Qué funcionalidades te gustaría añadir en la app?',
         required: true,
@@ -460,7 +237,7 @@ export const slides = [
         ],
       },
       {
-        id: 'q10_social',
+        id: 'q5_social',
         type: 'radio',
         label: '¿Usarías más la app si tuviese funciones sociales/comunidad?',
         required: true,
@@ -471,7 +248,7 @@ export const slides = [
         ],
       },
       {
-        id: 'q10_mas_importante',
+        id: 'q5_mas_importante',
         type: 'textarea',
         label: '¿Qué es lo MÁS importante que debería mejorar la app?',
         placeholder: 'La mejora que más impacto tendría para ti...',
@@ -479,16 +256,104 @@ export const slides = [
       },
     ],
   },
-  // ===== 11. COMUNIDAD Y CRECIMIENTO =====
+  // ===== 6. RETOS, LOGROS Y GAMIFICACIÓN =====
   {
-    id: 11,
+    id: 6,
+    section: 'Retos y gamificación',
+    emoji: '🎮',
+    title: 'Retos, logros y gamificación',
+    subtitle: '¿La gamificación te motiva a competir más?',
+    questions: [
+      {
+        id: 'q6_logros',
+        type: 'radio',
+        label: '¿Te gusta desbloquear logros durante la temporada?',
+        required: true,
+        options: [
+          { value: 'si', label: 'Sí', desc: '' },
+          { value: 'no', label: 'No', desc: '' },
+          { value: 'me_da_igual', label: 'Me da igual', desc: '' },
+        ],
+      },
+      {
+        id: 'q6_retos_opcionales',
+        type: 'radio',
+        label: '¿Te gusta tener retos opcionales además de los WODs oficiales?',
+        required: true,
+        options: [
+          { value: 'si', label: 'Sí', desc: '' },
+          { value: 'no', label: 'No', desc: '' },
+          { value: 'me_da_igual', label: 'Me da igual', desc: '' },
+        ],
+      },
+      {
+        id: 'q6_retos_fueraTemporada',
+        type: 'radio',
+        label: '¿Te gustaría que hiciéramos retos fuera de temporada?',
+        required: true,
+        options: [
+          { value: 'si', label: 'Sí', desc: '' },
+          { value: 'no', label: 'No', desc: '' },
+          { value: 'me_da_igual', label: 'Me da igual', desc: '' },
+        ],
+      },
+    ],
+  },
+  // ===== 7. CATEGORÍAS Y DIVISIONES =====
+  {
+    id: 7,
+    section: 'Categorías y divisiones',
+    emoji: '📊',
+    title: 'Categorías y divisiones',
+    subtitle: 'Ayúdanos a definir mejor el sistema de categorías.',
+    questions: [
+      {
+        id: 'q7_estandares',
+        type: 'radio',
+        label: '¿Qué te parecen los estándares actuales de tu categoría?',
+        required: true,
+        options: [
+          { value: 'muy_exigentes', label: 'Demasiado exigentes, lo bajaría', desc: '' },
+          { value: 'exigentes_gustan', label: 'Exigentes, pero me gustan', desc: '' },
+          { value: 'adecuados', label: 'Adecuados', desc: '' },
+          { value: 'bajos', label: 'Bajos', desc: '' },
+          { value: 'muy_bajos', label: 'Demasiado bajos, los subiría', desc: '' },
+        ],
+      },
+      {
+        id: 'q7_ascensos',
+        type: 'radio',
+        label: '¿Te interesaría un sistema de ascensos/descensos entre divisiones?',
+        required: true,
+        options: [
+          { value: 'si', label: 'Sí', desc: '' },
+          { value: 'no', label: 'No', desc: '' },
+          { value: 'no_lo_se', label: 'No lo sé', desc: '' },
+        ],
+      },
+      {
+        id: 'q7_independientes',
+        type: 'radio',
+        label: '¿Crees que las categorías femeninas, masculinas y mixtas deberían ser independientes?',
+        required: true,
+        options: [
+          { value: 'si', label: 'Sí', desc: '' },
+          { value: 'no', label: 'No', desc: '' },
+          { value: 'me_da_igual', label: 'Me da igual', desc: '' },
+        ],
+      },
+    ],
+  },
+  // ===== 8. COMUNIDAD Y CRECIMIENTO =====
+  {
+    id: 8,
     section: 'Comunidad',
     emoji: '🤝',
     title: 'Comunidad y crecimiento',
     subtitle: 'Queremos que TimeCup sea algo más que una competición.',
     questions: [
       {
-        id: 'q11_interaccion',
+        id: 'q8_interaccion',
         type: 'radio',
         label: '¿Te gustaría que hubiese más interacción entre equipos y boxes?',
         required: true,
@@ -499,13 +364,12 @@ export const slides = [
         ],
       },
       {
-        id: 'q11_organice',
+        id: 'q8_organice',
         type: 'checkbox',
         label: '¿Te gustaría que TimeCup organizase...?',
         required: true,
         options: [
           { value: 'quedadas', label: 'Quedadas', desc: '' },
-          { value: 'entrenamientos', label: 'Entrenamientos conjuntos', desc: '' },
           { value: 'eventos_extra', label: 'Eventos presenciales extra', desc: '' },
           { value: 'liga_anual', label: 'Liga anual completa', desc: '' },
           { value: 'merch_drops', label: 'Merch drops', desc: '' },
@@ -513,7 +377,7 @@ export const slides = [
         ],
       },
       {
-        id: 'q11_merch',
+        id: 'q8_merch',
         type: 'radio',
         label: '¿Te gustaría merch oficial de TimeCup?',
         required: true,
@@ -522,53 +386,32 @@ export const slides = [
           { value: 'no', label: 'No', desc: '' },
         ],
       },
-      {
-        id: 'q11_merch_productos',
-        type: 'checkbox',
-        label: '¿Qué productos te interesarían?',
-        required: true,
-        options: [
-          { value: 'camisetas', label: 'Camisetas', desc: '' },
-          { value: 'sudaderas', label: 'Sudaderas', desc: '' },
-          { value: 'calcetines', label: 'Calcetines', desc: '' },
-          { value: 'botellas', label: 'Botellas', desc: '' },
-          { value: 'stickers', label: 'Stickers/parches', desc: '' },
-          { value: 'otro', label: 'Otro', desc: '' },
-        ],
-      },
-      {
-        id: 'q11_crecimiento',
-        type: 'textarea',
-        label: '¿Qué crees que haría que TimeCup creciese más?',
-        placeholder: 'Tu visión para el futuro de la liga...',
-        required: false,
-      },
     ],
   },
-  // ===== 12. PREGUNTA FINAL =====
+  // ===== 9. PREGUNTA FINAL =====
   {
-    id: 12,
+    id: 9,
     section: 'Pregunta final',
     emoji: '🚀',
     title: 'Para acabar...',
     subtitle: 'Las preguntas más importantes del formulario. Tómate tu tiempo.',
     questions: [
       {
-        id: 'q12_un_cambio',
+        id: 'q9_un_cambio',
         type: 'textarea',
         label: 'Si pudieras cambiar UNA sola cosa para la próxima temporada, ¿qué sería?',
         placeholder: 'Una cosa, la más importante para ti...',
         required: false,
       },
       {
-        id: 'q12_perfecta',
+        id: 'q9_perfecta',
         type: 'textarea',
         label: 'Si TimeCup fuese "la liga perfecta", ¿qué tendría?',
         placeholder: 'Descríbenos tu visión de la liga ideal...',
         required: false,
       },
       {
-        id: 'q12_extra',
+        id: 'q9_extra',
         type: 'textarea',
         label: 'Déjanos cualquier comentario extra',
         placeholder: 'Cualquier cosa que no hayamos preguntado y quieras compartir...',

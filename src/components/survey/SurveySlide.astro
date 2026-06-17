@@ -1,29 +1,6 @@
 ---
 import SurveyQuestion from './SurveyQuestion.astro';
-
-interface Option {
-  value: string;
-  label: string;
-  desc?: string;
-}
-
-interface Question {
-  id: string;
-  type: string;
-  label: string;
-  placeholder?: string;
-  required?: boolean;
-  options?: Option[];
-}
-
-interface Slide {
-  id: number;
-  section: string;
-  emoji: string;
-  title: string;
-  subtitle: string;
-  questions: Question[];
-}
+import type { Slide } from '../../data/survey';
 
 export interface Props {
   slide: Slide;

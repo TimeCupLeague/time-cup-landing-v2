@@ -203,6 +203,10 @@ import SurveyNavigation from '../components/survey/SurveyNavigation.astro';
     });
   });
 
+  // Capture the ordered list of column headers right after initialization
+  // (Object.keys preserves insertion order in modern JS)
+  const orderedHeaders = Object.keys(answers);
+
   // Elements
   const progressBar = document.getElementById('progress-bar')!;
   const stepLabel = document.getElementById('step-label')!;
@@ -503,13 +507,18 @@ import SurveyNavigation from '../components/survey/SurveyNavigation.astro';
       btnNext.disabled = true;
 
       try {
+        const payload = {
+          ...answers,
+          _headers: orderedHeaders,
+          _timestamp: new Date().toISOString(),
+        };
         await fetch('https://script.google.com/macros/s/AKfycbxL5IeV5SnBCuGkWf3PPIeoLC34fClXMbpBKrvXyuACpTybprhq3eo5hClXolvb4ZOAyA/exec', {
           method: 'POST',
           mode: 'no-cors',
           headers: {
             'Content-Type': 'text/plain',
           },
-          body: JSON.stringify(answers),
+          body: JSON.stringify(payload),
         });
       } catch (e) {
         window.console.error('Error enviando respuestas:', e);

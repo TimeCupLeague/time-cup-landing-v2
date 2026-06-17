@@ -1,18 +1,5 @@
 ---
-interface Option {
-  value: string;
-  label: string;
-  desc?: string;
-}
-
-interface Question {
-  id: string;
-  type: string;
-  label: string;
-  placeholder?: string;
-  required?: boolean;
-  options?: Option[];
-}
+import type { Question } from '../../data/survey';
 
 export interface Props {
   q: Question;
