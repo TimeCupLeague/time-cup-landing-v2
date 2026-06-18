@@ -227,7 +227,7 @@ export const slides: Slide[] = [
         id: 'q5_funcionalidades',
         type: 'checkbox',
         label: '¿Qué funcionalidades te gustaría añadir en la app?',
-        required: true,
+        required: false,
         options: [
           { value: 'chat', label: 'Chat entre atletas/equipos', desc: '' },
           { value: 'estadisticas', label: 'Estadísticas personales', desc: '' },
@@ -367,7 +367,7 @@ export const slides: Slide[] = [
         id: 'q8_organice',
         type: 'checkbox',
         label: '¿Te gustaría que TimeCup organizase...?',
-        required: true,
+        required: false,
         options: [
           { value: 'quedadas', label: 'Quedadas', desc: '' },
           { value: 'eventos_extra', label: 'Eventos presenciales extra', desc: '' },
