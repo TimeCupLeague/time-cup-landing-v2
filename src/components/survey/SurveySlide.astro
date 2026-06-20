@@ -1,0 +1,144 @@
+---
+import SurveyQuestion from './SurveyQuestion.astro';
+import type { Slide } from '../../data/survey';
+
+export interface Props {
+  slide: Slide;
+  slideIndex: number;
+}
+
+const { slide, slideIndex } = Astro.props;
+---
+
+<div
+  class={`survey-slide ${slideIndex === 0 ? 'active' : ''}`}
+  data-slide={slideIndex}
+  id={`slide-${slideIndex}`}
+>
+  <div class="slide-inner">
+    <div class="slide-header-row">
+      <span class="slide-emoji-pill">{slide.emoji}</span>
+      <span class="slide-section-tag">{slide.section}</span>
+    </div>
+    <h2 class="slide-title">{slide.title}</h2>
+    <p class="slide-subtitle">{slide.subtitle}</p>
+
+    <div class="slide-questions">
+      {slide.questions.map((q) => (
+        <SurveyQuestion q={q} />
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ===== SLIDES ===== */
+  .survey-slide {
+    display: none;
+    animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .survey-slide.active {
+    display: block;
+  }
+
+  .survey-slide.exit {
+    animation: slideOut 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideOut {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-24px);
+    }
+  }
+
+  @keyframes slideInReverse {
+    from {
+      opacity: 0;
+      transform: translateX(-24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .survey-slide.reverse {
+    animation: slideInReverse 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slide-inner {
+    padding: 2rem 0;
+  }
+
+  .slide-header-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+
+  .slide-emoji-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(145, 114, 233, 0.2), rgba(71, 20, 219, 0.15));
+    border: 1px solid rgba(145, 114, 233, 0.25);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .slide-section-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #9172e9;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(145, 114, 233, 0.08);
+    border: 1px solid rgba(145, 114, 233, 0.2);
+    padding: 5px 14px;
+    border-radius: 99px;
+  }
+
+  .slide-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    text-transform: none;
+  }
+
+  .slide-subtitle {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .slide-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+</style>
