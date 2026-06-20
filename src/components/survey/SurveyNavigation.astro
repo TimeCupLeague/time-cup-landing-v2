@@ -1,0 +1,114 @@
+---
+import { slides } from '../../data/survey';
+---
+
+<div class="survey-navigation" id="survey-navigation">
+  <button class="survey-nav-btn survey-back" id="btn-back" type="button" aria-label="Pregunta anterior" disabled>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+    Anterior
+  </button>
+
+  <div class="nav-center">
+    <span class="nav-fraction" id="nav-fraction">1 / {slides.length}</span>
+  </div>
+
+  <button class="survey-nav-btn survey-next" id="btn-next" type="button">
+    Siguiente
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+</div>
+
+<style>
+  /* ===== NAVIGATION (FOOTER) ===== */
+  .survey-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .survey-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .survey-nav-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .survey-nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .survey-next {
+    background: linear-gradient(135deg, rgba(145, 114, 233, 0.15), rgba(71, 20, 219, 0.15));
+    border-color: rgba(145, 114, 233, 0.3);
+    color: #c8b8f4;
+  }
+
+  .survey-next:hover:not(:disabled) {
+    background: linear-gradient(135deg, rgba(145, 114, 233, 0.25), rgba(71, 20, 219, 0.25));
+    border-color: rgba(145, 114, 233, 0.5);
+  }
+
+  .nav-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-fraction {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 640px) {
+    .survey-navigation {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .survey-nav-btn {
+      flex: 1;
+      justify-content: center;
+      padding: 14px 12px;
+    }
+
+    .survey-back {
+      order: 1;
+    }
+
+    .survey-next {
+      order: 2;
+      flex: 1;
+    }
+
+    .nav-center {
+      order: 3;
+      width: 100%;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+  }
+</style>

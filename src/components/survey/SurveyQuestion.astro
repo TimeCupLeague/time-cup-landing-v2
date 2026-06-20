@@ -1,0 +1,503 @@
+---
+import type { Question } from '../../data/survey';
+
+export interface Props {
+  q: Question;
+}
+
+const { q } = Astro.props;
+---
+
+<div class="question-block" id={`question-${q.id}`}>
+  <label class="question-label" for={q.id}>
+    {q.label}
+    {q.required && <span class="required-mark">*</span>}
+  </label>
+
+  {q.type === 'text' && (
+    <input
+      type="text"
+      id={q.id}
+      name={q.id}
+      placeholder={q.placeholder}
+      class="survey-input"
+      autocomplete="off"
+    />
+  )}
+
+  {q.type === 'textarea' && (
+    <textarea
+      id={q.id}
+      name={q.id}
+      placeholder={q.placeholder}
+      class="survey-textarea"
+      rows="4"
+    ></textarea>
+  )}
+
+  {q.type === 'radio' && (
+    <div class="survey-options" role="radiogroup">
+      {q.options?.map((opt) => (
+        <>
+          <label class="survey-option" data-value={opt.value}>
+            <input
+              type="radio"
+              name={q.id}
+              value={opt.value}
+              class="option-input"
+            />
+            <span class="option-content">
+              <span class="option-label">{opt.label}</span>
+              {opt.desc && <span class="option-desc">{opt.desc}</span>}
+            </span>
+            <span class="option-check">✓</span>
+          </label>
+          {(opt.value === 'otro' || opt.value === 'otra') && (
+            <input
+              type="text"
+              id={`${q.id}_other_text`}
+              class="survey-input other-input"
+              placeholder="Por favor, especifica..."
+              style="display: none; margin-top: -4px; margin-bottom: 8px;"
+              autocomplete="off"
+            />
+          )}
+        </>
+      ))}
+    </div>
+  )}
+
+  {q.type === 'checkbox' && (
+    <div class="survey-options" role="group">
+      {q.options?.map((opt) => (
+        <>
+          <label class="survey-option" data-value={opt.value}>
+            <input
+              type="checkbox"
+              name={q.id}
+              value={opt.value}
+              class="option-input option-checkbox"
+            />
+            <span class="option-content">
+              <span class="option-label">{opt.label}</span>
+              {opt.desc && <span class="option-desc">{opt.desc}</span>}
+            </span>
+            <span class="option-check">✓</span>
+          </label>
+          {(opt.value === 'otro' || opt.value === 'otra') && (
+            <input
+              type="text"
+              id={`${q.id}_other_text`}
+              class="survey-input other-input"
+              placeholder="Por favor, especifica..."
+              style="display: none; margin-top: -4px; margin-bottom: 8px;"
+              autocomplete="off"
+            />
+          )}
+        </>
+      ))}
+    </div>
+  )}
+
+  {q.type === 'nps' && (
+    <div class="nps-container">
+      <div class="nps-labels">
+        <span>Nada probable</span>
+        <span>Muy probable</span>
+      </div>
+      <div class="nps-scale" role="radiogroup" id={q.id}>
+        {[0,1,2,3,4,5,6,7,8,9,10].map((n) => (
+          <label class="nps-option">
+            <input type="radio" name={q.id} value={String(n)} class="nps-input" />
+            <span class="nps-number">{n}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {q.type === 'scale5' && (
+    <div class="scale5-container" id={q.id}>
+      <div class="scale5-labels">
+        <span>Muy malo</span>
+        <span>Excelente</span>
+      </div>
+      <div class="scale5-track" role="radiogroup">
+        {[1,2,3,4,5].map((n) => (
+          <label class="scale5-option">
+            <input type="radio" name={q.id} value={String(n)} class="scale5-input" />
+            <span class="scale5-number">{n}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {q.type === 'stars' && (
+    <div class="stars-container" id={q.id} role="radiogroup">
+      {[1,2,3,4,5].map((n) => (
+        <label class="star-option">
+          <input type="radio" name={q.id} value={String(n)} class="star-input" />
+          <span class="star-icon" data-value={n}>★</span>
+        </label>
+      ))}
+      <span class="stars-hint" id={`${q.id}-hint`}></span>
+    </div>
+  )}
+</div>
+
+<style>
+  /* ===== QUESTIONS ===== */
+  .question-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    padding-left: 0;
+  }
+
+  .question-block.error {
+    border-left: 3px solid #ef4444;
+    padding-left: 1rem;
+  }
+
+  .question-label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.4;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .required-mark {
+    color: #d946ef;
+    margin-left: 4px;
+  }
+
+  /* ===== INPUTS ===== */
+  .survey-input,
+  .survey-textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    outline: none;
+    resize: vertical;
+    accent-color: #9172e9;
+  }
+
+  .survey-input:focus,
+  .survey-textarea:focus {
+    border-color: #9172e9;
+    background: rgba(145, 114, 233, 0.06);
+    box-shadow: 0 0 0 3px rgba(145, 114, 233, 0.15);
+  }
+
+  .survey-input::placeholder,
+  .survey-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  /* ===== OPTIONS (RADIO / CHECKBOX) ===== */
+  .survey-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .survey-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .survey-option::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(145, 114, 233, 0.1), rgba(217, 70, 239, 0.05));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .survey-option:hover {
+    border-color: rgba(145, 114, 233, 0.4);
+  }
+
+  .survey-option:hover::before {
+    opacity: 1;
+  }
+
+  .survey-option.selected {
+    border-color: #9172e9;
+    background: rgba(145, 114, 233, 0.08);
+  }
+
+  .survey-option.selected::before {
+    opacity: 1;
+  }
+
+  .option-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .option-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .option-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .option-desc {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .option-check {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: transparent;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .survey-option.selected .option-check {
+    background: #9172e9;
+    border-color: #9172e9;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(145, 114, 233, 0.5);
+  }
+
+  /* ===== NPS ===== */
+  .nps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .nps-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .nps-scale {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .nps-option {
+    flex: 1;
+    min-width: 40px;
+    cursor: pointer;
+  }
+
+  .nps-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .nps-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .nps-option:hover .nps-number {
+    border-color: rgba(145, 114, 233, 0.5);
+    color: #fff;
+  }
+
+  .nps-option.selected .nps-number {
+    background: #9172e9;
+    border-color: #9172e9;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(145, 114, 233, 0.4);
+  }
+
+  /* ===== SCALE 1-5 ===== */
+  .scale5-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .scale5-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .scale5-track {
+    display: flex;
+    gap: 10px;
+  }
+
+  .scale5-option {
+    flex: 1;
+    cursor: pointer;
+  }
+
+  .scale5-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .scale5-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .scale5-option:hover .scale5-number {
+    border-color: rgba(145, 114, 233, 0.5);
+    color: #fff;
+    background: rgba(145, 114, 233, 0.08);
+  }
+
+  .scale5-option.selected .scale5-number {
+    background: linear-gradient(135deg, #9172e9, #4714db);
+    border-color: #9172e9;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(145, 114, 233, 0.4);
+    transform: translateY(-2px);
+  }
+
+  /* ===== STARS ===== */
+  .stars-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .star-option {
+    cursor: pointer;
+  }
+
+  .star-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .star-icon {
+    font-size: 2.8rem;
+    color: rgba(255, 255, 255, 0.15);
+    transition: all 0.15s ease;
+    display: block;
+    line-height: 1;
+    cursor: pointer;
+    filter: drop-shadow(0 0 0px transparent);
+  }
+
+  .star-option:hover .star-icon,
+  .star-icon.lit {
+    color: #f59e0b;
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
+    transform: scale(1.1);
+  }
+
+  .stars-hint {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-left: 4px;
+    font-style: italic;
+    min-width: 80px;
+  }
+
+  @media (max-width: 640px) {
+    .nps-scale {
+      gap: 2px;
+      flex-wrap: nowrap;
+    }
+
+    .nps-number {
+      height: 38px;
+      font-size: 0.75rem;
+      border-radius: 6px;
+    }
+    
+    .nps-option {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .scale5-number {
+      height: 44px;
+      font-size: 1rem;
+    }
+    
+    .star-icon {
+      font-size: 2.2rem;
+    }
+    
+    .question-label {
+      font-size: 1.1rem;
+    }
+    
+    .survey-option {
+      padding: 12px 14px;
+    }
+  }
+</style>
