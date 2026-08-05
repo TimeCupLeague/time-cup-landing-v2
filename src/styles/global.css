@@ -294,6 +294,89 @@ body {
   margin-bottom: 1rem;
 }
 
+.dates {
+  padding: 6rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.dates h2 {
+  margin-bottom: 3.5rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+}
+
+.dates h3 {
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-style: bold;
+  font-weight: 500;
+  line-height: 160%;
+  font-size: 20px;
+  margin-bottom: 0.3rem;
+  margin-top: revert;
+}
+
+.dates .card .subtext {
+  font-style: italic;
+  font-size: 16px;
+}
+
+.dates .card .price {
+  font-family: 'Geist Mono', monospace;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.dates .grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.dates .card,
+.list .card {
+  padding: 1.8rem;
+  border-radius: 8px;
+  background: var(--linear, linear-gradient(150deg, #3b1b45 0%, #411b45 24%, #251650 92%, #171358 100%));
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.dates .card .boxGroup {
+  border-radius: 8px;
+  background: var(--linear, linear-gradient(#c828a9 0%, #a02087 100%));
+  color: #fff;
+  padding: 8px 16px;
+  font-weight: 500;
+  width: max-content;
+}
+
+.dates .card .boxLastGroup {
+  border-radius: 8px;
+  background: #ffffff;
+  color: #a02087;
+  padding: 8px 16px;
+  font-weight: 500;
+  width: max-content;
+}
+
+.dates .card {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  display: flex;
+}
+
+.dates .card .boxText {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+}
+
 /* Botones Generales */
 .btn-primary {
   display: flex;
@@ -1110,7 +1193,8 @@ footer a:hover {
   .hero h1 {
     font-size: 4.5rem;
   }
-  .features .grid {
+  .features .grid,
+  .dates .grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
