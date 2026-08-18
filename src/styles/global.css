@@ -335,7 +335,7 @@ body {
   gap: 2rem;
 }
 
-.dates .card{
+.dates .card {
   padding: 1.8rem;
   border-radius: 8px;
   background: var(--linear, linear-gradient(150deg, #3b1b45 0%, #411b45 24%, #251650 92%, #171358 100%));
@@ -343,7 +343,6 @@ body {
   align-items: flex-start;
   gap: 16px;
 }
-
 
 .list .card {
   padding: 1.8rem;
