@@ -308,6 +308,14 @@ body {
   font-family: 'Outfit', sans-serif;
 }
 
+.dates .opening {
+  list-style: none;
+  padding: 0;
+  margin: -2rem 0 3rem;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
 .dates h3 {
   color: #fff;
   font-family: 'Poppins', sans-serif;
@@ -679,7 +687,13 @@ h2 {
 .standards-table td {
   padding: 12px 0;
   font-size: 0.9rem;
+  line-height: 24px;
   color: #fff;
+}
+
+.standards-table td img {
+  display: block;
+  margin-left: auto;
 }
 
 .standards-table td:last-child {
