@@ -687,7 +687,13 @@ h2 {
 .standards-table td {
   padding: 12px 0;
   font-size: 0.9rem;
+  line-height: 24px;
   color: #fff;
+}
+
+.standards-table td img {
+  display: block;
+  margin-left: auto;
 }
 
 .standards-table td:last-child {
